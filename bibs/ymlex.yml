@@ -1,20 +1,23 @@
-某在线报告:
+供需报告:
     type: Report
-    title: 2023年中国大陆月面抛光人才供需报告
+    title: 2023年中国大陆集成电路产业人才供需报告
     year: 2022
-    url: https://www.cameronsworld.net/
-    author: [cameronaskin]
+    url: http://www.by-consulting.cn/home/projects/detail/id/10
+    author: [雨前顾问, 安谋科技]
 
-某期刊文章:
+方法思考与实践:
     type: Article
-    author: [张四, 李五, 赵六]
-    title: 不基于ChatGPT的狗屁不通生成器
+    author: [包云岗,孙凝晖,张科]
+    title: 处理器芯片开源设计与敏捷开发方法思考与实践
     date: 2019
     page-range: 42-48
     parent:
         type: Periodical
-        title: 人工与智能
+        title: 中国计算机学会通讯
         volume: 15
         issue: 10
         
-
+SV不可综合代码:
+    type: web
+    title: What SystemVerilog features should be avoided in synthesis?
+    url: https://stackoverflow.com/questions/20312810/what-systemverilog-features-should-be-avoided-in-synthesis
