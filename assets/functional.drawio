@@ -7,7 +7,7 @@
         <mxCell id="CRj4OYLTbuhGIO_4ob-R-8" value="" style="verticalLabelPosition=bottom;shadow=0;dashed=0;align=center;html=1;verticalAlign=top;shape=mxgraph.electrical.logic_gates.logic_gate;operation=and;aspect=fixed;" vertex="1" parent="1">
           <mxGeometry x="794" y="390" width="66.67" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="CRj4OYLTbuhGIO_4ob-R-9" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;out := in1.zip(in2).map(&amp;nbsp; _&amp;amp; _&amp;nbsp; ) .redoceOr&amp;nbsp;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="CRj4OYLTbuhGIO_4ob-R-9" value="&lt;font style=&quot;font-size: 20px;&quot;&gt;out := in1.zip(in2).map(&amp;nbsp; _&amp;amp; _&amp;nbsp; ) .reduceOr&amp;nbsp;&lt;/font&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
           <mxGeometry x="600" y="350" width="390" height="30" as="geometry" />
         </mxCell>
         <mxCell id="CRj4OYLTbuhGIO_4ob-R-14" value="" style="group" vertex="1" connectable="0" parent="1">
