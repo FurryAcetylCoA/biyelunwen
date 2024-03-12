@@ -21,3 +21,10 @@ SV不可综合代码:
     type: web
     title: What SystemVerilog features should be avoided in synthesis?
     url: https://stackoverflow.com/questions/20312810/what-systemverilog-features-should-be-avoided-in-synthesis
+
+axiSpecification:
+    type: web
+    title: AMBA AXI and ACE Protocol Specification AXI3, AXI4, AXI5, ACE and ACE5
+    url: https://www.arm.com/architecture/system-architectures/amba/amba-specifications
+    author: Arm Limited
+    date: 2023

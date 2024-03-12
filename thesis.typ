@@ -95,8 +95,10 @@
 RISC-V是一款开源且免费的精简指令集架构。自从该指令集架构发布以来，在国内外吸引了许多关注。
 
 如今，已有来自70多个国家的3900多个实体加入了RISC-V联盟，其中高级成员有超过40%来自中国。
+国内外越来越多的公司、组织和开发人员正在支持和贡献RISC-V。
+包括芯片设计商、软件开发商、工具提供商以及三星电子、西部数据和英伟达等行业巨头。
 开放的RISC-V架构鼓励了全球范围内的协作和技术创新，降低了进入壁垒，极大地促进学术界和创业公司在芯片设计领域的创新活动。
-RISC-V具有开源免费、模块化、容易定制等特点，为我国芯片设计的发展带来了新的机遇。
+其开源免费、模块化、容易定制等特点，为我国芯片设计的发展带来了新的机遇。
 有助于我国掌握核心关键技术的同时开放地对待国际交流与合作。
 
 物联网时代的到来对处理器芯片提出了更多的需求。
@@ -159,13 +161,17 @@ RISC-V具有简洁，现代的特点，受到了国内外的广泛关注。
  可以在同样的大小下存储更多指令，并且不对成本产生显著影响。
 
 - 开放： 传统ISA高额的授权费和严格的使用限制对于学术界和初创企业来说是巨大的负担。
- 而RISC-V的开源特性使得任何用户都可以免费使用该指令集而不需要缴纳授权费。
- 通过开源许可模式，RISC-V打破了传统处理器授权的限制，有助于减少行业依赖于少数专有指令集架构的风险，促进公平竞争和市场活力。
- 
-
+  而RISC-V是开源架构,其规范可公开获取,无需支付专利费或许可费，
+  有助于减少行业依赖于少数专有指令集架构的风险，促进公平竞争和市场活力。
 
 - 简洁： RISC-V在设计之初参考了大量现有ISA的经验与缺点，设计更加现代化，基础指令只有40余条。
  避免了对某一特定微架构的过度优化，允许研究者在不被各类复杂的兼容性需求约束的情况下，自由探索各类微架构设计。
+
+- 灵活:RISC-V允许自定义和扩展指令集架构,使芯片设计师能够根据业务需求量身定制架构。
+ 这种灵活性使RISC-V在物联网设备到高性能计算系统等广泛应用领域都具有吸引力。
+
+- 便于教育和研究:RISC-V作为简洁且现代的开源架构，使其成为体系结构教学与研究的绝佳平台。
+  许多大学和学术机构已采用RISC-V进行教学,并开发创新的硬件和软件解决方案。
 
 - 完整的软件支持：RISC-V提供完整的软件堆栈，编译器工具链以及继承开发环境和操作系统支持。
 
@@ -298,16 +304,35 @@ Chisel语言的高效主要体现在四个方面：
 也为探索乱序执行做好了准备。
 
 在逻辑上，为了方便优化，
-本微架构分为以下几个基础单元： 取指单元，译码单元，运算单元，访存单元，写回单元。
-每个基础单元均可以根据自身情况产生 "准备/有效（Ready/ Valid）" 握手信号。
-每个单元会通知前一级自身是否可以接收数据。并通知向下一级当前输出是否有效。
+本微架构分为以下几个基础单元： 取指单元，译码单元，执行单元，访存单元，写回单元。
 
-当时钟周期到来时，如果Ready与Valid均有效，表明数据准备完成，且下一级可以接收数据，则数据流向下一流水级。
-如果Valid有效而Ready无效，表明虽然数据准备完成，但下一级暂时无法接收数据，此时本级受到反压（Backpressure），数据停止流动。
+#fig(image("images/main_flow.png"), caption: [整体单元划分]) <main_flow>
 
-【这里放一张图】
+== 信号握手
 
 
+如 @fig:ready_valid 所示，每个基础单元均可以根据自身情况产生 "准备/有效（Ready / Valid）" 握手信号。
+Valid标识模块当前的数据（Data）是否有效，Ready标识本模块是否能接收Data输入。
+ 
+模块间遵循 @tbl:ready_valid_tbl 的语义进行传输握手。
+此外，为防止数据丢失，当模块表示当前数据有效后，除非数据成功传输，否则不能撤销有效信号。
+本级有效而下级忙的情况称为发生数据反压（Back pressure）
+
+#fig(image("images/ready_valid.png", height: 15%), caption: [Ready / Valid 握手信号]) <ready_valid>
+
+#fig(
+  tlt(
+    columns: 3,
+    [下级Ready],  [本级Valid],     [数据传输行为],
+    [有效],    [有效],  [数据成功传输至下级模块],
+    [有效],    [无效], [当前数据无效 下级模块需等待],
+    [无效], [有效],          [下级模块忙 本级需保持Data并等待],
+    [无效], [无效],          [不发生数据传输],
+    ),
+  caption: [握手信号行为说明],
+) <ready_valid_tbl>
+
+【接下来的这几个单元有必要写那么详细吗。我感觉我在说废话】
 
 == 取指单元
 
@@ -315,14 +340,14 @@ Chisel语言的高效主要体现在四个方面：
 
 #fig(image("images/cpu_fetch.png", height: 25%) , caption: [取指单元总体架构]) <cpu_img0>
 
-取值单元根据上一条指令的译码、执行结果修改程序计数器（PC），并取出下一条指令。
 
-整个取值单元分成PC生成单元及指令访存单元。
+#indent 取指单元根据上一条指令的译码、执行结果修改程序计数器（PC），并取出下一条指令。
+整个取值单元分成PC生成器及指令访存器。
 
-=== PC生成单元
+=== PC生成器
 
-PC生成单元将根据当前处理器的状态以及指令来确定下一执行周期的程序计数器的值。
-目前，程序计数器生成单元支持以下行为：
+PC生成器将根据当前处理器的状态以及指令来确定下一执行周期的程序计数器的值。
+目前，程序计数器生成器支持以下行为：
 
 + 顺序执行
 + 普通跳转（不切换特权级）
@@ -332,6 +357,7 @@ PC生成单元将根据当前处理器的状态以及指令来确定下一执行
 
 RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分支跳转（B系列指令）。无条件跳转（J系指令），
 也支持在异常发生时进入异常处理程序并返回。PC寄存器的结构如@fig:cpu_pc_structure 所示,其行为如@tbl:next_pc_gen 所示。
+
 
 #fig(
   tlt(
@@ -348,18 +374,18 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 ) <next_pc_gen>
 
 
-#fig(image("images/cpu_pc.png", height: 31%) , caption: [PC单元结构]) <cpu_pc_structure>
+#fig(image("images/cpu_pc.png", height: 31%) , caption: [PC生成器结构]) <cpu_pc_structure>
 
-=== 指令访存单元
+=== 指令访存器
 
-指令访存单元的任务是根据当前PC，向处理器核内的AXI[插入引用？]主机仲裁单元发起访存请求。其结构如@fig:imem_fsm  所示。
+指令访存器的任务是根据当前PC，向处理器核内的AXI @axiSpecification 主机仲裁单元发起访存请求。其结构如@fig:imem_fsm  所示。
 在复位后，指令访存控制器在`idle`状态等待有效的访存事务发生。收到访存请求后，按照@tbl:imem_fsm_tlb
-的行为对取值单元的输出端口进行操作。需要注意的是，该状态机的输出均来自寄存器。
+的行为对取值器的输出端口进行操作。需要注意的是，该状态机的输出均来自寄存器。
 
 由于AXI协议规定在读事务完成时不再保持数据有效信号。在读取完成后，指令执行中的若干周期，指令有效信号
 将由状态机提供【是这样的吗。我要确认一下】
 
-#fig(image("images/inst-mem_stateMachine.png", height: 28%), caption: [取指单元状态机]) <imem_fsm>
+#fig(image("images/inst-mem_stateMachine.png", height: 28%), caption: [取指状态机]) <imem_fsm>
 
 #fig(
   tlt(
@@ -372,107 +398,130 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
   caption: [取指单元状态机转移说明],
 ) <imem_fsm_tlb>
 
-#fig(image("images/inst-mem.png", height: 18%), caption: [取指单元结构]) <imem>
+#fig(image("images/inst-mem.png", height: 18%), caption: [指令访存器结构]) <imem>
 
 
 
 == 译码单元
 
-== 运算单元
+译码单元的任务是任务是根据当前指令，通过译码器产生各类控制信号；从寄存器组中读出数据。
+#fig(image("images/cpu_decode.png", height: 30%) , caption: [取指单元总体架构]) <cpu_decode>
 
-    [异常返回],  [未定义], [未定义], [mePC ]       ,[允许写入],    == 访存单元
+=== 译码器
+
+译码器主要功能如下：
+
+- 访问寄存器： 由【RISCV 指令格式图】 所示， RISC-V指令集中，对于需要访问寄存器的指令，
+   其寄存器编号均在指令的固定位置。
+   为简化电路，译码器被设计为不对当前指令类型进行判断，固定将 24～20 与 19～15段的内容视为寄存器编号，进行寄存器访问。
+
+- 立即数产生与符号扩展： 由【RISCV 指令格式图】 所示， RISC-V指令集中，对于具有立即数的指令，
+  无论立即数长度，其符号位固定位31位。
+  为简化电路，符号扩展被设计为固定使用31位做为符号进行扩展，各下级模块由解码结果决定是否使用。
+  在后续设计中，将根据时序报告决定是否将本部件移动到执行单元。
+
+- 控制信号生成： 根据指令类型和具体指令操作。为下级模块提供控制信号。【我觉得还是把这里优化成chisel decoder吧】
+
+【要解释所有控制信号的用途吗？】
+
+== 执行单元
+
+执行阶段是微架构数据流的核心，如 @fig:cpu_execute 所示。其任务是根据译码单元产生的控制信号，对操作数进行逻辑运算。
+
+【todo：下面图的输出没有pc和inst】
+
+#fig(image("images/cpu_execute.png", height: 30%) , caption: [执行单元总体架构]) <cpu_execute>
+
+算数逻辑模块（ALU）结构较为简单，其组成如 @lst:code_alu 所示。
+
+#figure(par(```scala
+  io.out := 
+   MuxLookup(io.fIdu.aluOp, 0.U(XLEN.W)) {
+    Seq(
+      AluOpTypes.sub -> (op1 - op2),
+      AluOpTypes.add -> (op1 + op2),
+      AluOpTypes.eq -> (op1 === op2),
+      AluOpTypes.op2 -> (op2),
+      AluOpTypes.neq -> (op1 =/= op2),
+      AluOpTypes.less -> (op1 < op2),
+      AluOpTypes.s_less -> (sop1 < sop2),
+      AluOpTypes.ge -> (op1 >= op2),
+      AluOpTypes.s_ge -> (sop1 >= sop2),
+      AluOpTypes.or -> (op1 | op2),
+      AluOpTypes.and -> (op1 & op2),
+      AluOpTypes.xor -> (op1 ^ op2),
+      AluOpTypes.sl -> (op1 << shamt), 
+      AluOpTypes.sr -> (op1 >> shamt), 
+      AluOpTypes.s_sr -> (sop1 >> shamt).asUInt,
+      AluOpTypes.op1p4 -> (op1 + 0x4.U)
+    )
+  } 
+```,leading:0.8em), caption: [ALU模块主要Chisel代码]) <code_alu>
+
+== 访存单元
+
+访存单元是为了装载（LOAD）与储存（STORE）指令设计的。其设计如 @fig:cpu_memory 所示。
+为了提高流水线后各阶段的效率，设计时分析了LOAD/STORE指令的资源需求，
+决定将CSR的读写合并于本模块内。
+
+根据当前执行的指令不同，模块顶层的 Ready/Valid 生成器会选择旁路或使用来自数据访存器的 Ready/Valid 信号。
+
+要提一下根据rv的load store指令，aluOut上是目标内存地址
+
+#fig(image("images/cpu_memory.png", height: 38%) , caption: [访存单元总体架构]) <cpu_memory>
+
+=== 数据访存器
+
+
+#fig(image("images/cpu_memory_exmem.png", height: 38%) , caption: [数据访存器架构]) <cpu_memory_exmem>
+
+
 
 == 写回单元
+ 
 
 
-== dasd
+#fig(image("images/cpu_writeback.png", height: 28%) , caption: [写回单元总体架构]) <cpu_writeback>
+
+== 仿照吕 加入Chisel段落
+
+要强调Chisel具体好在哪里。给功能点举出例子
+
+= 验证
+
+== 验证平台
+
+== 验证环境
+
+介绍整体，引出NPC，NEMU，Spike。使用Difftest将他们串在一起
+
+== Difftest
+
+== NPC
+
+这里对verilator进行说明
+
+==== sdb component //Or list instead?
+
+== NEMU Spike
+
+== 仿真分析
+
+=== 基础测试
+
+如果这里想写长一点，可以参考吕的文章，按照流水段来写
+
+=== 特权指令集测试
+
+=== 启动RT-thread
 
 
-引用@tbl:timing-tlt1,引用@tbl:timing-tlt，以及引用图表时，表格、图片和代码分别需要加上 `tbl:`、`fig:` 和 `lst:` 前缀才能正常显示编号。以及这里使用 `fig` 函数替代原生 `figure` 函数以支持将 `tablex` 作为表格来识别。
-
-#align(center, (stack(dir: ltr)[
-  #fig(
-    tlt(
-      columns: 2,
-      [药品],   [规格],
-      [浓氨水],  [分析纯AR],
-      [盐酸],   [分析纯AR],
-      [钛酸四丁酯], [≥99.0%]
-    ),
-    caption: [三线表1],
-  ) <timing-tlt1>
-][
-  #h(50pt)
-][
-  #fig(
-    tlt(
-      columns: 4,
-      map-cells: cell => {
-        if cell.y > 0 and cell.x > 0 {
-        cell.content = {
-          let text-color = if int(cell.content.text) < 5 {
-            red.lighten(30%)
-          } else {
-            green
-          }
-          set text(text-color)
-          strong(cell.content)
-        }
-      }
-      cell
-    },
-      [t], [1], [2], [3],
-      [y], [3], [4], [9],
-      [3], [3], [17], [0],
-    ),
-    caption: [三线表 - 着色],
-  ) <timing-tlt>
-]))
+= NEXT
 
 
-== 插图
-
-插图必须精心制作，线条均匀，图面整洁。插图位于正文中引用该插图字段的后面。每幅插图应有图序和图题，图序和图题应放在图位下方居中处
 
 
-== 数学公式
 
-可以像 Markdown 一样写行内公式 $x + y$，以及带编号的行间公式：
-
-$ phi.alt := (1 + sqrt(5)) / 2 $ <ratio>
-
-引用数学公式需要加上 `eqt:` 前缀，则由@eqt:ratio，我们有：
-
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
-
-#indent 图表和公式后的段落要用 `#indent` 手动缩进。同时，我们也可以通过 `<->` 标签来标识该行间公式不需要编号
-
-$ y = integral_1^2 x^2 dif x $ <->
-
-而后续数学公式仍然能正常编号。
-
-$ F_n = floor(1 / sqrt(5) phi.alt^n) $
-
-== 参考文献
-
-可以像这样引用参考文献：@wang2010guide 
-
-
-== 代码块
-
-```py
-def add(x, y):
-  return x + y
-```
-
-
-= 正文
-
-== 正文子标题
-
-=== 正文子子标题
-
-正文内容
 
 
 // 手动分页
