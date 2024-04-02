@@ -28,3 +28,37 @@ axiSpecification:
     url: https://www.arm.com/architecture/system-architectures/amba/amba-specifications
     author: Arm Limited
     date: 2023
+
+ngn-2023:
+    type: web
+    title: 倪光南院士：RISC-V是中国最受欢迎CPU架构，不受垄断制约
+    url: https://www.thepaper.cn/newsDetail_forward_22141048
+    date: 2023
+    author: 澎湃新闻
+
+ngn-2024:
+    type: web
+    title: 院士倪光南：发展基于RISC-V架构的DSA服务器是中国机遇！或能对X86服务器替代 
+    url: https://www.sohu.com/a/764075353_639898
+    date: 2024
+    author: 快科技    
+
+dft:
+    type: web
+    title: DiffTest-一种高效的处理器验证方法
+    url: https://www.bilibili.com/video/BV1PU4y1V7X3
+    date: 2021
+    author: [余子濠,王华强]
+
+wave:
+    type: web
+    title: gtkwave-filter-process-RISC-V
+    url: https://github.com/FurryAcetylCoA/gtkwave-filter-process-RISC-V
+    date: 2024
+    author: [荀阳霖,翁江杰]
+
+am:
+    type: web
+    title: abstract-machine
+    url: https://github.com/NJU-ProjectN/abstract-machine
+    author: [蒋炎岩,陈璐,余子濠]

@@ -1,0 +1,58 @@
+<mxfile host="Electron" modified="2024-04-02T07:35:37.860Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="HIv4_ZrNZ6IBKcWD4O8x" version="24.0.4" type="device">
+  <diagram name="Page-1" id="fhAdBneteFOGHc8kXIiF">
+    <mxGraphModel dx="988" dy="551" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-1" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;FPGA / ASIC / 仿真器&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="520" y="550" width="200" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-2" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;RISC-V 64&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="520" y="500" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-3" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;RISC-V 32&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b1ddf0;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="620" y="500" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-5" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;Linux&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="920" y="500" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-6" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;X86_64（Native环境）&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="720" y="550" width="300" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-7" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;NEMU&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="720" y="500" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-8" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;SPKIE&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=none;" vertex="1" parent="1">
+          <mxGeometry x="820" y="500" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-10" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;Coremark&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;Dhrystone&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;Microbench&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;基准测试程序&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#76608a;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="650" y="350" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-11" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;dummy / shift&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;fib /&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;font-size: 17px; background-color: initial;&quot;&gt;sum / crc32&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;功能测试程序&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#647687;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="520" y="350" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-12" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;打字游戏&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;演示动画&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;LiteNES&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;真实应用&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#008a00;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="770" y="350" width="120" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-13" value="&lt;span style=&quot;font-size: 17px;&quot;&gt;RT-thread&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 17px;&quot;&gt;Nanos-lite&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#a20025;strokeColor=none;fontColor=#ffffff;" vertex="1" parent="1">
+          <mxGeometry x="890" y="350" width="130" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-9" value="&lt;font style=&quot;font-size: 17px;&quot;&gt;AM = TRM + [IOE]+ [CTE] + [VME] + [MPE]&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f0a30a;strokeColor=default;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="520" y="450" width="500" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-14" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;宿主环境&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="555" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-15" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;AM&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="455" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-16" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;宿主架构&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="505" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="O4zuGCpfo9Xft8WWkmu7-17" value="&lt;font style=&quot;font-size: 19px;&quot;&gt;AM应用 / 操作系统&amp;nbsp;&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="1030" y="360" width="120" height="80" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

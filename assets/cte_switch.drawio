@@ -1,0 +1,67 @@
+<mxfile host="Electron" modified="2024-03-17T13:28:04.088Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.0.4 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="KKEQ-7vDDIh_ojNZEjV0" version="24.0.4" type="device">
+  <diagram name="Page-1" id="lXNj8JQmdZIlTVaWbob7">
+    <mxGraphModel dx="691" dy="386" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-2" value="线程" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="455" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-3" value="操作系统" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="390" y="520" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-4" value="硬件" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="575" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-5" value="调用yield" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="465" y="455" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-6" value="执行ecall指令" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="450" y="520" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-NQKDJ37Ewu2Son77Ja4-7" target="-NQKDJ37Ewu2Son77Ja4-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-7" value="处理ecall" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="465" y="575" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-8" value="跳转到mtvec" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="560" y="575" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="-NQKDJ37Ewu2Son77Ja4-10">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="690" y="575" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-10" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;保存上下文&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 11px;&quot;&gt;切换上下文&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="565" y="515" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-16" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" target="-NQKDJ37Ewu2Son77Ja4-15">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="715" y="590" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="745" y="590" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-12" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;mret&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="667" y="575" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-15" value="&lt;span style=&quot;font-size: 11px;&quot;&gt;另一线程开始执行&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="690" y="455" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.503;entryY=-0.011;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="-NQKDJ37Ewu2Son77Ja4-5" target="-NQKDJ37Ewu2Son77Ja4-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.505;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="-NQKDJ37Ewu2Son77Ja4-6" target="-NQKDJ37Ewu2Son77Ja4-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="-NQKDJ37Ewu2Son77Ja4-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.692;entryY=1.008;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="-NQKDJ37Ewu2Son77Ja4-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="605.3599999999999" y="555.32" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
