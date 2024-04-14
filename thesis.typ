@@ -19,13 +19,14 @@
   info: (
     title: ("基于Chisel的精简指令集微处理器设计"),
     title-en: ("Chisel implementation of a RISC microprocessor"),
-    grade: "20物联网02",
+    grade: "20物联网工程 2 班",
     student-id: "19125042040",
     author: "荀阳霖",
     department: "信息工程学院",
     major: "物联网工程",
     supervisor: ("王娜", "讲师"),
-    
+    begin-date: "2023年9月",
+    end-date: "2024年6月"
   ),
 )
 
@@ -43,28 +44,20 @@
 
 // 中文摘要
 #abstract(
-  keywords: ("我", "就是", "测试用", "关键词")
+  keywords: ("RISC-V指令集", "Chisel语言", "敏捷开发", "芯片设计","片上系统")
 )[
-  写完再摘
+  针对当前处理器芯片领域面临的高技术壁垒、人才短缺、物联网时代多元化需求以及安全挑战等问题，结合开源指令集架构RISC-V的兴起，提出并实现了一款基于Chisel语言的精简指令集微处理器设计，具备模块化、可扩展的架构特点，适用于物联网应用的多样性和安全性要求。Chisel语言的采用显著提升了设计效率与代码质量，降低了芯片设计门槛，体现了敏捷开发在芯片设计领域的优势。通过严谨的验证流程与仿真分析，证明了所设计处理器的正确性和有效性。为物联网领域提供了定制化、低成本、高能效的处理器解决方案，同时为我国芯片设计人才培养与核心技术掌握提供了实践范例。
 
-  #indent 高效抽象的处理器芯片
-硬件设计语言与工具.快速迭代的芯片设计与
-系统级原型验证方法(敏捷开发)让开发硬件像开发软件那
-么容易
-高质量芯片人才需要掌握计算机整体的软硬件理论知识与全程工程技术。既要在“学中做”，也要在“做中学” @ooicci 。
-本文作者通过设计可运行基本操作系统的处理器芯片并完成投片。尝试贯穿芯片设计全链条，结合贯通计算机专业的诸多课程。
-完成知识的有机融合，打通从数字电路、组成原理、体系结构、操作系统、嵌入式开发的全流程知识点。
 ]
 
 #pagebreak()
 
 // 英文摘要
 #abstract-en(
-  keywords: ("Dummy", "Keywords", "Here", "It Is")
+  keywords: ("RISC-V instruction set", "Chisel", "Agile development", "Chip design","System on chip")
 )[
-  English abstract
+  In response to the high technological barriers, talent shortages, diverse demands of the Internet-of-Things (IoT) era, and security challenges confronting the processor chip domain, this work proposes and realizes a modular and extensible Reduced Instruction Set Computer (RISC) microprocessor design based on the Chisel language, tailored to accommodate the variety and security requisites of IoT applications. The adoption of Chisel significantly enhances design efficiency and code quality, lowering the entry barrier for chip design while exemplifying the benefits of agile development within the realm of semiconductor engineering. Through rigorous verification processes and simulation analyses, the correctness and efficacy of the designed processor are substantiated. This effort furnishes the IoT sector with a customizable, cost-effective, and energy-efficient processor solution, concurrently providing a practical exemplar for cultivating talent in chip design and mastering core technologies within our nation.
 ]
-
 // 目录
 #outline-page()
 
@@ -78,7 +71,7 @@
 #show: mainmatter
 
 //使用外文缩写代替某一名词术语，首次出现时应在括号内注明其含义
-
+/*
 #show figure.where(kind: "i-figured-raw"): it => {
     let dic = it.fields()
     let _ = if "body" in dic { dic.remove("body") }
@@ -88,12 +81,14 @@
   let fig = figure(text(par(it.body,justify: false,leading:0.65em),size: 12pt),
       ..dic,kind: "f" + repr(it.kind))
   fig
-}
+}*/
 
 = 绪论
 
 == 研究工作的背景与意义
 
+高质量芯片人才需要掌握计算机整体的软硬件理论知识与全程工程技术。既要在“学中做”，也要在“做中学” @ooicci 。
+完成知识的有机融合，打通从数字电路、组成原理、体系结构、操作系统、嵌入式开发的全流程知识点。
 
 世界正在加速转型进入数字经济时代。而做为数字化引擎的处理器芯片，则是一切的基石。虽然信息领域市场巨大，竞争强烈，
 但十几年来却已经形成了“赢家通吃”的场面。高精尖技术与人才长期被把握在少数西方大公司的壁垒之中。
@@ -150,6 +145,19 @@ Tenstorrent公司通过组合大量精简的RISC-V核，使用片上网络技术
 算能公司于2023年推出的基于RISC-V处理器SG2042，主频2GHz，拥有64个核心， 达到高性能处理器梯队。
 
 兆易创新生产的GD32V系列微控制器（MCU）也使用了RISC-V核心，广泛在国内嵌入式领域使用。
+
+== 一生一芯计划
+
+为应对我国芯片人才培养中遇到的设计门槛高、课程间关联弱、实践不足、学习坡度陡等挑战。
+缓解我国芯片被“卡脖子”等形势。秉承“科研为国分忧，创新与民造福的理念。
+循着“设计一种新的教学体系，降低芯片设计门槛，让学生能设计自己的芯片并成功流片”的思路。
+在中国科学院-先进计算机系统研究中心联与中国科学院大学的大力支持下。
+由孙凝晖院士部署，包云岗团队牵头设计并组织了“一生一芯”计划。
+
+计划的目标是突破传统课程的边界，构建一套软硬件协同，理论和实践并发，打通前后端的全链条处理器芯片教学流程。
+让学生理解从体系结构设计、开发，到集成验证、综合、物理设计，最终生成可流片的版图的全过程。籍此提高我国处理器芯片设计的人才培养质量，培养更多紧缺的芯片人才。 “一生一芯”计划不限学校、年级、专业，只要学生对处理器芯片设计感兴趣，都能报名参加，并资助完成学习计划的在校生免费流片。
+通过开放式的教育，打破教育资源壁垒，加速培养我国处理器芯片紧缺的人才。
+
 
 
 
@@ -314,15 +322,15 @@ Chisel语言的高效主要体现在四个方面：
 
 - 面向对象：Chisel中可以将常用的电路组件封装成类，并通过继承与派生的方式定义常用变体，便于代码重用，减少冗余。
   籍此，Chisel内置了大量的预定义组件供工程师使用。 以描述一个32位带使能端带复位的寄存器为例，
-  @lst:d1_chisel @lst:d1_verilog 表明，Chisel实现不仅更加简短，并且明确表示了这个寄存器的行为。
+  @lst:d1_chisel ,  @lst:d1_verilog 表明，Chisel实现不仅更加简短，并且明确表示了这个寄存器的行为。
   而Verilog实现需要工程师阅读Always块的内容才能确定该寄存器的行为。
 
-  #fig(```scala
+  #figure(text(par(```scala
       val delay1_r = RegEnable(io.in, 0.U(32.W), io.enable)
       io.out := delay1_r
-  ```,caption: [Chisel实现]) <d1_chisel>
+  ```,justify: false,leading:0.65em),size: 12pt),caption: [Chisel实现]) <d1_chisel>
 
-  #fig(```verilog
+  #figure(text(par(```verilog
       reg [31:0] delay1_r; 
       assign io_out = delay1_r; 
       always @(posedge clock) begin
@@ -332,7 +340,7 @@ Chisel语言的高效主要体现在四个方面：
           delay1_r <= io_in; 
         end
       end
-  ```,caption: [Verilog实现]) <d1_verilog>
+  ```,justify: false,leading:0.65em),size: 12pt),caption: [Verilog实现]) <d1_verilog>
 
 - 函数式：Chisel的函数式特性将允许工程师使用map或zip算子实现电路级联的批处理操作，可以简洁地描述数据流。
   如 @fig:functional 所示，级联的算子操作可以直接对应生成后的电路。
@@ -385,6 +393,9 @@ Chisel语言的高效主要体现在四个方面：
 片上系统的设计如 @fig:soc 所示。
 
 #fig(image("images/soc_1.png",height:25%), caption: [片上系统设计]) <soc>
+
+
+#pagebreak() //手动孤页控制
 
 == 信号握手
 
@@ -544,7 +555,7 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 
 如 @lst:code_zhengti 所示, 通过Chisel的整体连接，可以使用少量代码完成安全可靠的连接。
 
-#fig(```scala
+#figure(text(par(```scala
   class Top extends Module {
     val fetch     = Module(new Fetch)
     val decode    = Module(new Decode)
@@ -559,16 +570,17 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
     fetch.io.in    <> writeback.io.out
   }
 
-```, caption: [顶层模块主要代码]) <code_zhengti>
+```,justify: false,leading:0.65em),size: 12pt), caption: [顶层模块主要代码]) <code_zhengti>
 
 === 寄存器组
 
 由于线束（Bundle）的存在，声明寄存器组的IO接口变得更加容易，且当Idu或Csr
 增加新的控制寄存器组的信号时，不需要改动寄存器组的IO接口声明。
 
-使用VecInit
+//使用VecInit
 
-#fig(```scala
+
+#figure(text(par(```scala
 class Reg extends Module {
   val io = IO(new Bundle {
     val fIdu  = Flipped(new IduRegBundle())
@@ -600,7 +612,7 @@ class Reg extends Module {
   regs(0) := 0.U
 }
 
-```, caption: [REG模块整体代码]) <code_reg>
+```,justify: false,leading:0.65em),size: 12pt), caption: [REG模块整体代码]) <code_reg>
 
 === 译码单元
 
@@ -608,7 +620,7 @@ class Reg extends Module {
 对应电路将指令码解析成不同的bundle。
 再按照该类型指令的格式从bundle中提取所需信息，形成操作码。
 
-#fig(```scala
+#figure(text(par(```scala
   io.toAlu.aluOp := MuxLookup(opType, AluOpTypes.unknown) {
     Seq(
       Optypes.I -> opI(io.inst),
@@ -659,7 +671,7 @@ class Reg extends Module {
     val rd      = UInt((11 - 7 + 1).W)
     val op      = UInt((6 - 0 + 1).W)
   }
-```, caption: [译码单元代码节选]) <code_idu>
+```,justify: false,leading:0.65em),size: 12pt), caption: [译码单元代码节选]) <code_idu>
 
 === 算数逻辑单元
 
@@ -668,7 +680,7 @@ class Reg extends Module {
 同时Chisel可以进行类型检查，防止使用错误的数据类型进行匹配。
 使用MuxLookup则有效提高了代码密度。
 
-#fig(```scala
+#figure(text(par(```scala
 object AluOpTypes extends ChiselEnum {
     val sub,add, and, xor, neq, ge,
     ... ...
@@ -690,7 +702,7 @@ class Alu extends Module {
     )
   } 
 }
-```, caption: [ALU模块Chisel代码节选]) <code_alu>
+```,justify: false,leading:0.65em),size: 12pt), caption: [ALU模块Chisel代码节选]) <code_alu>
 
 
 === AXI 读分用器
@@ -703,7 +715,8 @@ Chisel中，搭配函数式编程，可变数量端口的操作不会引起太�
 有助于工程师编写更加通用化的模块。
 @lst:code_axidecoder 展示了本处理器总线部分的AXI 读分用器实现。
 //NOTE：这里我把那些Vecinit去掉了。否则太长视觉效果不好
-#fig(```scala
+
+#figure(text(par(```scala
 object AXIDecoder{
   val maps = Seq(DMap("h8000_0000".U, "h8800_0000".U), // SRAM
                  DMap("hA000_03F8".U, "hA000_03F8".U), // UART
@@ -740,7 +753,7 @@ class AXIReadDecoder(val n: Int) extends Module{
 
   }
 }
-```, caption: [AXI 读分用器代码节选]) <code_axidecoder>
+```,justify: false,leading:0.65em),size: 12pt), caption: [AXI 读分用器代码节选]) <code_axidecoder>
 
 #indent AXI读分用器（AXIReadDecoder）是一种一对多信号分配器件，
 当输入端请求AXI读操作时，根据操作的地址范围，将请求分配到合适的外设中，并记录当前选择。
@@ -796,6 +809,8 @@ _decodedOH_ 与 io.in.ar.arready 的生成过程如 @fig:axidecode_OH 所示。
 
 接下来对验证流程中的主要模块进行讲解 
 
+#pagebreak() //手动孤页控制
+
 === Difftest
 
 
@@ -820,7 +835,7 @@ Verilator 是一款基于周期的开源 Verilog 仿真工具，可以将 Verilo
   在仿真开始前，读取输入程序的符号表，确认所有函数的地址。
   当CPU进行跳转时，根据目标地址和指令形式区分函数调用与函数返回，生成调用栈。该模块可以识别尾递归。
 - 波形分析器插件：波形产生后，指令只能以十六进制机器码的形式展示。不便于阅读。作者为波形分析器设计了一个插件。
-  使用反汇编工具将机器码转换为易读的汇编指令。如@fig:after @fig:before 所示。相关代码已发布@wave。
+  使用反汇编工具将机器码转换为易读的汇编指令。如@fig:after , @fig:before 所示。相关代码已发布@wave。
 
   #fig(image("images/before.png",width: 80%), caption: [在波形软件中的原始显示]) <before>
   #fig(image("images/after.png",width: 80%), caption: [使用插件后可显示对应汇编]) <after>
@@ -838,8 +853,8 @@ Verilator 是一款基于周期的开源 Verilog 仿真工具，可以将 Verilo
   #fig(image("images/npc-sdb.png",height: 30%), caption: [仿真界面演示]) <fzjm>
 
   #indent 仿真环境亦可设置断点或直接查看内存，方便开发者观察特定代码区间执行前后的变化。
- 
-  #fig(```C
+
+  #figure(text(par(```C
 volatile int fib[40] = {1, 1};
 int main() {
   int i;
@@ -848,7 +863,7 @@ int main() {
   }
   return 0;
 }
-  ```,caption:[简单斐波那契数列程序]) <fib>
+  ```,justify: false,leading:0.65em),size: 12pt),caption:[简单斐波那契数列程序]) <fib>
  
   #indent 以@lst:fib 中所示的简单斐波那契数列程序为例，
   通过反汇编找出循环体内写入fib数组的指令后，设置断点_b 0x200000b8_，
@@ -887,6 +902,7 @@ CPU提供硬件功能，AM提供运行时环境。
 
 #fig(image("images/AM.png",width:90%),caption:[AM整体层次]) <AM>
 
+#pagebreak() //手动孤页控制
 === 适配抽象计算机
 
 通过在硬件中实现某种机制，然后在AM中使用该机制填充相应的API。
@@ -897,8 +913,8 @@ CPU提供硬件功能，AM提供运行时环境。
 + 清空帧寄存器
 + 设置栈指针到链接脚本指定的栈起始区
 + 跳转到 \_trm_init。进入C环境
-
-#fig(```asm
+ 
+#figure(text(par(```asm
 .section entry, "ax"
 .globl _start
 .type  _start, @function
@@ -908,7 +924,7 @@ _start:
   la sp, _stack_pointer
   jal _trm_init
 
-```,caption:[start.S]) <start>
+```,justify: false,leading:0.65em),size: 12pt),caption:[start.S]) <start>
 
 #indent 在进入C环境后，AM的需要完成以下操作
 
@@ -917,14 +933,14 @@ _start:
 + 调用客户程序主函数
 + 根据主函数返回值，向硬件发出停机指令。
 
-#fig(```c
+#figure(text(par(```c
 #define DEVICE_BASE 0x10000000
 #define SERIAL_PORT (DEVICE_BASE + 0x0000000)
 
 void uart_init(){
   outb(SERIAL_PORT + 3, 0b10000011); // 8N1 with Divisor Latch Access
   outb(SERIAL_PORT + 1, 0x00); // No interrupt
-  outb(SERIAL_PORT + 0, 0x01); // Set Divisor
+  outb(SERIAL_PORT + 0, 0x21); // Set Divisor
   outb(SERIAL_PORT + 3, 0b00000011); // 8N1 without Divisor Latch Access
 }
 void putch(char ch) {
@@ -940,74 +956,78 @@ void _trm_init() {
   int ret = main(mainargs);
   halt(ret);
 }
-```,caption:[trm.c]) <start2>
+```,justify: false,leading:0.65em),size: 12pt),caption:[trm.c]) <start2>
 
+=== 适配存储结构
 
+由于程序所在的ROM在运行时是只读的，因此，为了支持全局变量的写入操作。
+需要在系统启动时将数据段(data，bss)从ROM加载到可读写的RAM中。
+为了实现这一点，需要在链接时标记各个段的加载地址（LMA）与运行地址（VMA）。
+并编写bootloader程序完成初始化时的数据加载操作。
 
+本设计的内存布局如 @fig:linker_layout  所示，对应的链接脚本和bootloader程序节如下。
+
+#fig(image("images/linker_layout.png"),caption: [内存布局]) <linker_layout>
+
+#figure(text(par(```c
+SECTIONS {
+  _sldata = LOADADDR(.data);
+  .text : {
+    *(entry)
+    *(.text*)
+  } > MROM
+  .rodata : {
+    *(.rodata*)
+  } > MROM
+  .data : ALIGN(4) {
+    _sdata = .;
+    *(.data*)
+    _edata = .;
+  } >SRAM AT> MROM
+  .bss : {
+    _sbss = .;
+    *(.bss*)
+    _ebss = .;
+  } >SRAM
+  .heap_stack : {
+    _stack_top = ALIGN(4);   
+    . = _stack_top + 0x1200;
+    _stack_pointer = .;
+    _heap_start = ALIGN(8);
+    _heap_end = ORIGIN(SRAM) + LENGTH(SRAM) - 1;
+  } >SRAM
+}
+```,justify: false,leading:0.65em),size: 12pt), caption: [链接脚本节选]) <linker>
+
+#figure(text(par(```asm
+_loader:
+  la a0, _sldata
+  la a1, _sdata
+  la a2, _edata
+0:
+  beq a1, a2, 1f
+  lw a3, 0(a0)
+  sw a3, 0(a1)
+  addi a0, a0, 4
+  addi a1, a1, 4
+  j 0b
+1:
+  la a0, _sbss
+  la a1, _ebss
+2:
+  beq a0, a1, 3f
+  sw x0, 0(a0)
+  addi a0, a0, 4
+  j 2b
+3:
+  ret
+```,justify: false,leading:0.65em),size: 12pt), caption: [bootloader节选]) <bootloader>
 
 == 仿真分析
 
 === 运行测试
 
 基础测试包括基本的算数运算、跳转、加载储存等指令。使用C语言编写，测试列表见 @tbl:basic_test
-
-由@fig:basic_test_result 可见，CPU顺利通过基本测试
-
-=== 特权指令集测试 
-
-特权指令集使用yield-os进行测试。yield-os是一个具有3个内核线程的协作式操作系统。
-线程需要调用`yield()`函数主动让出处理器，操作系统提供一个基本的上下文保护和任务切换。
-
-#fig(image("images/cte_switch.png"), caption: [线程切换流程])
-
-
-//==== 特权指令集实现
-
-
-//=== 启动RT-thread
-
-//== 性能分析
-
-
-
-
-
-// 手动分页
-#if (twoside) {
-  pagebreak() + " "
-}
-// 参考文献
-#bibliography(("bibs/ex01.bib", "bibs/ymlex.yml"),
-  style: "./china-national-standard-gb-t-7714-2015-numeric.csl"
-)
-
-// 正文结束标志，不可缺少
-#mainmatter-end()
-
-
-#if (twoside) {
-  pagebreak() + " "
-}
-
-// 致谢
-#acknowledgement[
-  【有要求致谢】
-  //感谢 NJU-LUG，提供 NJUThesis Typst 模板。
-]
-
-
-// 手动分页
-#if (twoside) {
-  pagebreak() + " "
-}
-
-#show: appendix
-
-= 附录
-
-#fig(image("images/Screenshot_mtrace.png", height: 32%), caption: [mtrace使用截图]) <mtrace>
-#fig(image("images/sdb_exec.png", height:  40%), caption: [单指令执行相关代码]) <sdb_exec>
-#fig(image("images/Screenshot_profile.png"), caption: [自动性能分析相关代码]) <make_prof>
 
 #fig(tlt(
   columns: 4,
@@ -1035,6 +1055,299 @@ void _trm_init() {
   [wanshu],[完数],
 ), caption:[基本测试程序]) <basic_test>
 
+#indent 由@fig:basic_test_result 可见，CPU顺利通过基本测试
+
 #fig(image("images/basic_test.png",height : 47% ), caption: [基本测试结果]) <basic_test_result>
+
+#indent CoreMark @coremark 是一个业界用来衡量嵌入式系统中CPU性能的测试程序。它主要测试CPU的整数性能，
+含有列表处理、矩阵操作、状态机和 CRC等几个测试子项。
+
+本文设计的CPU可以正确运行CoreMark，并在合理的时间内完成测试。
+
+#fig(image("images/coremark.png", width: 100%), caption: [CoreMark测试结果]) <coremark_img>
+
+
+//=== 特权指令集测试 
+
+//特权指令集使用yield-os进行测试。yield-os是一个具有3个线程的协作式操作系统。
+//线程需要调用`yield()`函数主动让出处理器，操作系统提供一个基本的上下文保护和任务切换。
+
+//#fig(image("images/cte_switch.png"), caption: [线程切换流程])
+
+
+//==== 特权指令集实现
+
+
+//=== 启动RT-thread
+
+//== 性能分析
+
+= 原型验证
+
+== 片上系统
+
+为了实现包括输入输出在内的完整功能，需要将单一处理器核封装到SoC（System on Chip，片上系统）中。
+SoC不仅仅只包含一个处理器, 还有诸多的外围设备, 以及连接处理器和外围设备之间的总线。
+本文使用ysyxSoC框架@ysyxsoc. 其主要结构如 @fig:soc_arc 所示
+
+#fig(image("images/SoC_Arc.png", width: 76%), caption: [ysyxSoC架构]) <soc_arc> 
+
+#indent SoC整体架构由CPU核，总线，外设接口，复位与时钟四部分组成。
+
+CPU核通过AXI总线与片上外设接口进行数据交互，AXI交叉桥将根据访存地址将请求转发到不同的外设，
+直接与AXI交叉桥相连接的是高速外设。对于低速外设，
+AXI总线通过AXI 转 APB 桥接器在转换成APB协议后连接到APB交叉桥。由APB总线负责低速外设，
+这些外设通过片上控制器经IO连接到片外外设中。
+
+#pagebreak() //手动孤页控制
+
+=== 外设地址空间
+
+目前主要有两种方式来实现CPU核与外设的通信。
+第一种I/O编址方式是端口映射I/O(PIO), CPU使用专门的I/O指令对设备进行访问, 并把设备的地址称作端口号。
+第二种方式是内存映射IO（MMIO）。外设将自己的设备寄存器做为内存地址提供。
+当需要访问外设寄存器时，CPU核读取或写入该地址，通过总线桥将指令转发到对应的外设中。
+
+ 
+由于PIO把端口号作为I/O指令的一部分。指令集为了兼容已经开发的程序, 端口号是只能添加但不能修改的。 
+这意味着, 端口映射I/O所能访问的I/O地址空间的大小, 在设计I/O指令的那一刻就已经决定下来了。 
+随着设备越来越多, 功能也越来越复杂, I/O地址空间有限的端口映射I/O已经逐渐不能满足需求了。 
+因此，目前的主流设计均采用内存映射IO的方式来实现设备交互。
+
+ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
+
+#fig(
+  tlt(
+    columns: 2,
+    [设备],   [地址空间],  
+    [GPIO],  [0x1000_2000～0x1000_200f],  
+    [MROM],  [0x2000_0000～0x2000_0fff],   
+    [UART],  [0x1000_0000～0x1000_0fff], 
+    [SPI],   [0x1000_1000～0x1000_1fff], 
+    [SRAM],  [0x0f00_0000～0x0f00_1fff],
+    [VGA],   [0x2100_0000～0x211f_ffff],
+    ),
+  caption: [MMIO映射],
+) <mmio_map>
+
+
+== 现场可编程门阵列
+
+现场可编程门阵列（FPGA），是一种半定制的集成电路，其具有高度可编程性，并且接近专用集成电路（ASIC）的特点。
+其经常用于在流片前的验证阶段中。
+与微控制器（MCU）不同，FPGA不含固定的逻辑。需要开发者使用硬件描述语言设计电路后才会呈现具体电路的行为。
+
+本文选择了基于Altera EP4CE10的野火征途开发板。其具有1万组逻辑元素，179个可编程IO口。
+
+#fig(image("images/product.png", width: 70%), caption: [开发板实物图])
+
+== GPIO控制器
+
+=== 寄存器设计
+
+#fig(
+  tlt(
+    columns: 5,
+    [名称],  [地址],  [宽度], [访问], [说明],
+    [Led],  [0x0],   [32],  [只写], [开发板上的LED灯],
+    [Key],  [0xC],   [32],  [只读], [开发板上的按键],
+    ),
+  caption: [GPIO控制器寄存器表],
+) <imemwsm_tlb>
+
+=== 主体代码
+
+#figure(text(par(```scala
+class gpioChisel extends Module {
+  val io = IO(new GPIOCtrlIO)
+  val addr = io.in.paddr(3,0)
+  val led_reg = RegInit("hF".U(4.W))
+  val keys_reg = Reg(UInt(6.W))
+
+  io.in.prdata := 0.U
+  io.in.pready := 0.U
+  io.gpio.led := led_reg
+
+  when(io.in.psel & io.in.pwrite & io.in.penable){
+    switch(addr){
+      is("h0".U){ led_reg := io.in.pwdata(3,0) }
+    }
+    io.in.pready := 1.B
+  }
+  when(io.in.psel & ~ io.in.pwrite){
+    when(~ io.in.penable){
+      switch(addr){
+        is("hC".U){ keys_reg := io.gpio.keys }
+      }
+    }.otherwise{
+      io.in.prdata := keys_reg
+      io.in.pready := 1.B
+    }
+  }
+}
+
+```,justify: false,leading:0.65em),size: 12pt),caption: [GPIO控制器代码])
+
+=== 测试程序
+
+通过MMIO，CPU核上运行的程序可以直接控制LED灯。
+通过编写移位程序，可编写基础的流水灯测试程序。
+
+#figure(text(par(```asm
+_start:
+	li a4, 0x10002000
+	li a0, 0x00000001
+shift:
+	srli a1, a0, 4
+	slli a0, a0, 1
+	or a0, a0, a1
+	not a3, a0
+	sw a3, 0(a4)
+	jal wait
+	j shift
+wait:
+	li t0, 0x7fff
+0:
+	addi t0, t0, -1
+	nop
+	bne t0, zero, 0b
+	ret
+```,justify: false,leading:0.65em),size: 12pt),caption: [流水灯测试代码]) <gpio>
+
+#fig(image("images/liushui.png", width: 70%), caption: [流水灯测试])
+
+#pagebreak() //手动孤页控制
+
+== UART 控制器
+
+=== 寄存器设计
+
+#fig(
+  tlt(
+    columns: 5,
+    [名称],    [地址],  [宽度], [访问], [说明],
+    [发送],    [0x0],   [8],  [只写], [发送缓冲区],
+    [中断控制], [0x1],   [8],  [读写], [中断使能与屏蔽],
+    [串口配置], [0x3],   [8],  [读写], [设置串口的数据格式],
+    [线路状态], [0x5],   [8],  [读写], [获取或清除传输状态],
+    ),
+  caption: [UART控制器寄存器表],
+) 
+=== 测试程序
+
+结合AM提供的支持，程序可直接使用C语言标准库输出到串口。
+
+#figure(text(par(```c
+int printf(const char *fmt, ...) {
+  char buffer[1024];
+  va_list ap;
+  va_start(ap, fmt);
+  int ret = vsprintf(buffer, fmt, ap);
+  va_end(ap);
+  putstr(buffer);
+  return ret;
+}
+
+int main(){
+	printf("Yanglin Xun from Shaoguan university\n");
+	printf("1234:%s\n", "abcd");
+}
+
+```,justify: false,leading:0.65em),size: 12pt),caption: [UART测试代码节选]) 
+
+#fig(image("images/uart_test.png", width: 50%), caption: [串口助手接收UART数据]) 
+
+= 总结与展望
+
+== 总结
+
+本研究成功完成了基于Chisel的精简指令集微处理器设计，该处理器具备RISC-V指令集的模块化、可扩展特性，适应物联网应用的多样化需求和安全性要求。并通运行测试程序和跑分程序，证实了所设计处理器的正确性和有效性。
+
+在此基础上，又成功实现了SoC化和对FPGA的支持，开发了GPIO和UART控制器，
+详细规定了寄存器设计、主体代码以及测试程序，确保处理器与外设间的协同工作。并完成了板级验证。
+能实现基本输入输出、硬件线程切换、图灵等价，几倍良好的可拓展性。
+
+借助Chisel的抽象化和敏捷开发的特性。快速地完成了处理器的整体设计与SoC接入。
+
+主要内容列举如下：
++ 通过阅读大量国内外文献，对RISC-V指令集架构的设计与发展现状进行了分析。并对比了其和其他精简指令集架构的优缺点。阅读各类相关的英文文档以确定处理器核的实现与标准文档一致。
++ 介绍了Chisel语言，敏捷开发对芯片设计领域的好处。着重介绍了Chisel语言如何通过提供丰富硬件原语抽象、支持类型描述电路接口以及使用函数操作电路组件，实现电路生成器的高效、可靠与类型安全性，从而显著提升逻辑设计效率与稳健性。
++ 搭建了软件测试平台，通过Verilator与Difftest。仔细验证了处理器功能与行为的正确性，
+  通过运行多种测试程序，确保处理器设计可以在各类工作负载下正常运行。
++ 完成了仿真环境到FPGA上板验证的迁移。以及对外设模块的仿真测试。学习了仿真环境与FPGA的不同，
+  并掌握了基础的FPGA开发技能，包括IP核调用，添加引脚约束，简单时序约束，片上逻辑分析仪的使用，通过调试器
+  对FPGA进行编程及固化。
+
+
+#pagebreak() //手动孤页控制
+
+== 展望
+
+虽然本文实现了基于Chisel的RV32E指令集的处理器设计。搭建了测试平台并完成上板验证，达到了期望的研究效果。
+但任存在诸多缺陷，还需要进一步的学习、设计与调试。
+
+主要缺陷内容列举如下：
+
++ 处理器核不支持外部中断，导致所有功能必须通过轮询实现，在某些情况下会浪费处理器计算能力，并导致外部事件不能及被处理。
++ 处理器核为多周期非流水线设计，单一模块工作时其他模块只能等待。导致从译码单元到回写单元的时序路径极长， 
+  不利于提升处理器各模块的利用率与整体时钟频率。
++ 无缓存功能，造成CPU每次在存储数据时都必须等待外部存储器响应，降低了运行效率。
+  且不支持MMU，导致无法运行现代操作系统（如Linux）。
++ 截至本文初稿完成，SoC中的Flash存储芯片控制器一直没有通过调试。
+  导致上板时只能运行小于4KB的程序，极大地限制了能进行的演示。导致上板后只能执行部分测试。造成了上板后的测试数量远少于仿真分析环节的测试。
++ 译码器的设计仍有优化空间。
+
+
+#indent 在今后的工作中，我将继续完成本设计中还未完善的地方，尝试为处理器搭建流水线和Cache，进一步提升性能。将本设计拓展成真正完善而可用的处理器。
+并探索如乱序执行，多发射，分支预测等高级体系结构的内容。争取启动Linux等实际操作系统。
+
+// 手动分页
+#if (twoside) {
+  pagebreak() + " "
+}
+// 参考文献
+#bibliography(("bibs/ex01.bib", "bibs/ymlex.yml"),
+  style: "./china-national-standard-gb-t-7714-2015-numeric.csl"
+)
+
+// 正文结束标志，不可缺少
+#mainmatter-end()
+
+
+#if (twoside) {
+  pagebreak() + " "
+}
+
+// 致谢
+#acknowledgement[
+  回顾在韶关学院的四年时光，收获甚多。不仅是在专业既能方面有了拓展和精进。更是结实了诸多良师益友。
+
+  首先要感谢我的导师王娜，她在大一期间就鼓励我及早参加比赛，让我早早地接触到了项目开发。
+  在我的方向陷入困境时，总能给我支持以及新的思考方向。
+  也要感谢信工之星工作室的蒋昌金指导老师，他带领了一批热爱技术的学生，排除诸多困难，
+  一直维护工作室的良好氛围，并不断鞭策我们。
+
+  也要感谢中国科学院-先进计算机系统研究中心的包云岗，余子濠，解壁伟老师。
+  他们带领的“一生一芯”计划、开源高性能处理器“香山”项目。
+  为我国处理器人才培养做出了极大的贡献。本文作者是“一生一芯”计划的正式成员。在研究期间得到了该计划的宝贵指导与资助。
+  
+  感谢 NJU-LUG，提供 NJUThesis Typst 论文模板。
+]
+
+
+// 手动分页
+#if (twoside) {
+  pagebreak() + " "
+}
+
+#show: appendix
+
+= 附录
+
+#fig(image("images/Screenshot_mtrace.png", height: 32%), caption: [mtrace使用截图]) <mtrace>
+#fig(image("images/sdb_exec.png", height:  40%), caption: [单指令执行相关代码]) <sdb_exec>
+#fig(image("images/Screenshot_profile.png"), caption: [自动性能分析相关代码]) <make_prof>
+
+
 
  

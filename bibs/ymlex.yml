@@ -62,3 +62,15 @@ am:
     title: abstract-machine
     url: https://github.com/NJU-ProjectN/abstract-machine
     author: [蒋炎岩,陈璐,余子濠]
+
+ysyxsoc:
+    type: web
+    title: ysyxsoc
+    url: https://github.com/OSCPU/ysyxSoC
+    author: [余子濠,Tang Haojin]
+
+coremark:
+    type: web
+    title: The Embedded Microprocessor Benchmark Consortium
+    url: https://www.eembc.org/coremark/
+    author: EEMBC
