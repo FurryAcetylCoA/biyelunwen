@@ -22,6 +22,7 @@
 #import "templates/list-of-tables.typ": list-of-tables
 #import "templates/notation.typ": notation
 #import "templates/acknowledgement.typ": acknowledgement
+#import "templates/bib.typ": bib
 #import "utils/custom-numbering.typ": custom-numbering
 #import "utils/custom-heading.typ": heading-display, active-heading, current-heading
 #import "utils/custom-tablex.typ": *
@@ -96,12 +97,14 @@
         mainmatter(
           twoside: twoside,
           display-header: true,
+          info: info + args.named().at("info", default: (:)),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
       } else {
         mainmatter(
           twoside: twoside,
+          info: info + args.named().at("info", default: (:)),
           ..args,
           fonts: fonts + args.named().at("fonts", default: (:)),
         )
@@ -268,7 +271,17 @@
         anonymous: anonymous,
         twoside: twoside,
         ..args,
+        fonts: fonts + args.named().at("fonts", default: (:)),
       )
     },
+
+    // 参考文献页
+    bib: (..args) => {
+      bib(
+        twoside: twoside,
+        ..args,
+        fonts: fonts + args.named().at("fonts", default: (:)),
+      )
+    }
   )
 }

@@ -4,21 +4,20 @@
 
 // 双面模式，会加入空白页，便于打印
 #let twoside = false
-// #let twoside = true
 
 #let (
   doc, preface, mainmatter, mainmatter-end, appendix,
-  fonts-display-page, cover, decl-page, abstract, abstract-en, outline-page, list-of-figures, list-of-tables, notation, acknowledgement,
+  fonts-display-page, cover, decl-page, abstract, abstract-en, outline-page, list-of-figures, list-of-tables, notation, acknowledgement, bib
 ) = documentclass(
   // anonymous: true,  // 盲审模式
   twoside: twoside,  // 双面模式，会加入空白页，便于打印
   // 可自定义字体，先英文字体后中文字体，应传入「宋体」、「黑体」、「楷体」、「仿宋」、「等宽」
    fonts: (楷体: ("Times New Roman", "LXGW WenKai GB"),
-           仿宋: ("Times New Roman", "Zhuque Fangsong (technical preview)")),
+           仿宋: ("Times New Roman", "Zhuque Fangsong (technical preview)"),),
 
   info: (
     title: ("基于Chisel的精简指令集微处理器设计"),
-    title-en: ("Chisel implementation of a RISC microprocessor"),
+    title-en: ("Chisel Implementation of a RISC Microprocessor"),
     grade: "20物联网工程 2 班",
     student-id: "19125042040",
     author: "荀阳霖",
@@ -83,7 +82,9 @@
   fig
 }*/
 
+
 = 绪论
+
 
 == 研究工作的背景与意义
 
@@ -93,7 +94,7 @@
 世界正在加速转型进入数字经济时代。而做为数字化引擎的处理器芯片，则是一切的基石。虽然信息领域市场巨大，竞争强烈，
 但十几年来却已经形成了“赢家通吃”的场面。高精尖技术与人才长期被把握在少数西方大公司的壁垒之中。
 
-随着中美贸易环境的变化和技术封锁措施，一些中国企业和高校被列入美国政府的‘实体清单’，这对中国芯片技术研发和人才培养带来了显著影响。
+随着中美贸易环境的变化和技术封锁措施，一些中国企业和高校被列入美国政府的“实体清单”，这对中国芯片技术研发和人才培养带来了显著影响。
 目前，我国的计算机专业人才培养面临着较大的结构问题。顶层应用开发者过多，而底层软硬件研发人员缺乏。
 特别是芯片设计人才严重不足。2022年间我国集成电路产业人才缺口达到3.5万#cite(<供需报告>)。
 这与当前芯片设计门槛过高，导致中国大学无法开展芯片相关教学与研究密切相关#cite(<方法思考与实践>)。
@@ -102,8 +103,7 @@
 对领域特定架构（DSA）的需求日渐增加，产业界急需一种更加快速、灵活的研发方法和基础架构。
 
 RISC-V(第五代精简指令集)是一款开源且免费的精简指令集架构。自从该指令集架构发布以来，在国内外吸引了许多关注。
-中国工程院院士倪光南表示，RISC-V具有模块化、可扩展、易定制的优势，以及不受垄断制约、供应链安全容易保障的优势，
-展基于RISC-V架构的DSA服务器是中国的机遇 @ngn-2023 @ngn-2024。
+中国工程院院士倪光南表示，RISC-V具有模块化、可扩展、易定制的优势，以及不受垄断制约、供应链安全容易保障的优势，基于RISC-V架构的DSA服务器是中国的机遇 @ngn-2023 @ngn-2024。
 
 如今，已有来自70多个国家的3900多个实体加入了RISC-V联盟，其中高级成员有超过40%来自中国。
 国内外越来越多的公司、组织和开发人员正在支持和贡献RISC-V。
@@ -224,17 +224,17 @@ RISC-V 指令编码格式如下
  可以在同样的大小下存储更多指令，并且不对成本产生显著影响。
 
 - 开放： 传统ISA高额的授权费和严格的使用限制对于学术界和初创企业来说是巨大的负担。
-  而RISC-V是开源架构,其规范可公开获取,无需支付专利费或许可费，
+  而RISC-V是开源架构，其规范可公开获取，无需支付专利费或许可费，
   有助于减少行业依赖于少数专有指令集架构的风险，促进公平竞争和市场活力。
 
 - 简洁： RISC-V在设计之初参考了大量现有ISA的经验与缺点，设计更加现代化，基础指令只有40余条。
  避免了对某一特定微架构的过度优化，允许研究者在不被各类复杂的兼容性需求约束的情况下，自由探索各类微架构设计。
 
-- 灵活:RISC-V允许自定义和扩展指令集架构,使芯片设计师能够根据业务需求量身定制架构。
+- 灵活:RISC-V允许自定义和扩展指令集架构，使芯片设计师能够根据业务需求量身定制架构。
  这种灵活性使RISC-V在物联网设备到高性能计算系统等广泛应用领域都具有吸引力。
 
 - 便于教育和研究:RISC-V作为简洁且现代的开源架构，使其成为体系结构教学与研究的绝佳平台。
-  许多大学和学术机构已采用RISC-V进行教学,并开发创新的硬件和软件解决方案。
+  许多大学和学术机构已采用RISC-V进行教学，并开发创新的硬件和软件解决方案。
 
 - 完整的软件支持：RISC-V提供完整的软件堆栈，编译器工具链以及继承开发环境和操作系统支持。
 
@@ -309,21 +309,21 @@ FIRRTL随后被输入硬件编译框架(Hardware Compiler Framework，HCF) CIRCT
 
 === Chisel的优点
 
-==== 开发高效
++ 开发高效
 
-Chisel语言的高效主要体现在四个方面： 
+  Chisel语言的高效主要体现在四个方面： 
 
-- 信号整体连接： Chisel丰富的类型系统和连接功能。允许工程师以组件化的方式声明和连接多个信号线，并进行整体连接。
-  从而简化了总线接口修改的工作流程。
-  避免了在使用传统HDL开发时，修改总线需要手动更新多个模块的端口而产生潜在错误。
+  - 信号整体连接： Chisel丰富的类型系统和连接功能。允许工程师以组件化的方式声明和连接多个信号线，并进行整体连接。
+    从而简化了总线接口修改的工作流程。
+    避免了在使用传统HDL开发时，修改总线需要手动更新多个模块的端口而产生潜在错误。
 
-- 元编程： Chisel可以抽象出多份相似模块的共用部分,通过使用参数化的硬件模板，工程师可以创建出可复用的硬件库。
-  有效减少了代码冗余。SystemVerilog虽然提供类似的功能，但仅用于验证 @SV不可综合代码，属于不可综合代码。
+  - 元编程： Chisel可以抽象出多份相似模块的共用部分，通过使用参数化的硬件模板，工程师可以创建出可复用的硬件库。
+    有效减少了代码冗余。SystemVerilog虽然提供类似的功能，但仅用于验证 @SV不可综合代码，属于不可综合代码。
 
-- 面向对象：Chisel中可以将常用的电路组件封装成类，并通过继承与派生的方式定义常用变体，便于代码重用，减少冗余。
-  籍此，Chisel内置了大量的预定义组件供工程师使用。 以描述一个32位带使能端带复位的寄存器为例，
-  @lst:d1_chisel ,  @lst:d1_verilog 表明，Chisel实现不仅更加简短，并且明确表示了这个寄存器的行为。
-  而Verilog实现需要工程师阅读Always块的内容才能确定该寄存器的行为。
+  - 面向对象：Chisel中可以将常用的电路组件封装成类，并通过继承与派生的方式定义常用变体，便于代码重用，减少冗余。
+    籍此，Chisel内置了大量的预定义组件供工程师使用。 以描述一个32位带使能端带复位的寄存器为例，
+    @lst:d1_chisel ，  @lst:d1_verilog 表明，Chisel实现不仅更加简短，并且明确表示了这个寄存器的行为。
+    而Verilog实现需要工程师阅读Always块的内容才能确定该寄存器的行为。
 
   #figure(text(par(```scala
       val delay1_r = RegEnable(io.in, 0.U(32.W), io.enable)
@@ -342,19 +342,19 @@ Chisel语言的高效主要体现在四个方面：
       end
   ```,justify: false,leading:0.65em),size: 12pt),caption: [Verilog实现]) <d1_verilog>
 
-- 函数式：Chisel的函数式特性将允许工程师使用map或zip算子实现电路级联的批处理操作，可以简洁地描述数据流。
-  如 @fig:functional 所示，级联的算子操作可以直接对应生成后的电路。
- 与Verilog的数据流建模相比，工程师不再需要关心运算符优先级。
+  - 函数式：Chisel的函数式特性将允许工程师使用map或zip算子实现电路级联的批处理操作，可以简洁地描述数据流。
+    如 @fig:functional 所示，级联的算子操作可以直接对应生成后的电路。
+    与Verilog的数据流建模相比，工程师不再需要关心运算符优先级。
 
-#fig(image("images/functional.png", height: 38%) , caption: [函数式操作与电路设计紧密对应]) <functional>
+  #fig(image("images/functional.png", height: 38%) , caption: [函数式操作与电路设计紧密对应]) <functional>
 
-==== 代码质量更优
++ 代码质量更优
 
-余子濠等人（2019）的研究 @标签化 指出。
-在FPGA上，与经验丰富的专职工程师使用Verilog相比，经训练的本科生使用Chisel的高级特性开发同样功能一致的缓存模块。
-无论能效、频率或资源占用，均优于Verilog实现，且代码可维护性优更优。
+  余子濠等人（2019）的研究 @标签化 指出。
+  在FPGA上，与经验丰富的专职工程师使用Verilog相比，经训练的本科生使用Chisel的高级特性开发同样功能一致的缓存模块。
+  无论能效、频率或资源占用，均优于Verilog实现，且代码可维护性优更优。
 
-#fig(
+  #fig(
   tlt(
     columns: 3,
     [类型],        [Verilog], [Chisel],    
@@ -380,7 +380,7 @@ Chisel语言的高效主要体现在四个方面：
 本文将首先实现一个单发射，简单流水线，顺序执行的基本RV32E扩展处理器芯片微架构。
 
 为方便拓展，本微架构流水级之间使用异步定时方式通信，通过握手信号控制数据是否流动。
-每个流水级的行为只取决于自身和下游模块的状态, 流水级均可以独立工作。
+每个流水级的行为只取决于自身和下游模块的状态， 流水级均可以独立工作。
 通过这种设计，避免了对全局控制器的需求，进而简化添加指令和流水级的难度。
 也为探索乱序执行做好了准备。
 
@@ -444,7 +444,7 @@ PC生成器将根据当前处理器的状态以及指令来确定下一执行周
 + 自陷指令——返回
 
 RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分支跳转（B系列指令）。无条件跳转（J系指令），
-也支持在异常发生时进入异常处理程序并返回。PC寄存器的结构如@fig:cpu_pc_structure 所示,其行为如@tbl:next_pc_gen 所示。
+也支持在异常发生时进入异常处理程序并返回。PC寄存器的结构如@fig:cpu_pc_structure 所示，其行为如@tbl:next_pc_gen 所示。
 
 
 #fig(
@@ -510,7 +510,6 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 
 - 控制信号生成： 根据指令类型和具体指令操作。为下级模块提供控制信号。 
 
-【要解释所有控制信号的用途吗？】
 
 == 执行单元
 
@@ -553,7 +552,7 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 在Verilog中，顶层模块通常充斥着大量的模块间连线与冗长的实例化端口连接。
 人工编写不仅耗费时间，且容易出错。
 
-如 @lst:code_zhengti 所示, 通过Chisel的整体连接，可以使用少量代码完成安全可靠的连接。
+如 @lst:code_zhengti 所示， 通过Chisel的整体连接，可以使用少量代码完成安全可靠的连接。
 
 #figure(text(par(```scala
   class Top extends Module {
@@ -814,8 +813,8 @@ _decodedOH_ 与 io.in.ar.arready 的生成过程如 @fig:axidecode_OH 所示。
 === Difftest
 
 
- Difftest方法源于软件工程领域, 全称Differential Testing(差分测试)。
- 其核心思想是: 对于根据同一规范的两种实现, 给定相同的有定义的输入, 它们的行为应当一致 @dft。
+ Difftest方法源于软件工程领域， 全称Differential Testing(差分测试)。
+ 其核心思想是: 对于根据同一规范的两种实现， 给定相同的有定义的输入， 它们的行为应当一致 @dft。
  在测试环境中，仿真环境每执行一条指令，都会让标准RISC-V模拟器_Spike_也执行一遍。
  通过对比两侧执行后的通用寄存器与控制寄存器即可判断Chisel实现是否正确。
 
@@ -835,7 +834,7 @@ Verilator 是一款基于周期的开源 Verilog 仿真工具，可以将 Verilo
   在仿真开始前，读取输入程序的符号表，确认所有函数的地址。
   当CPU进行跳转时，根据目标地址和指令形式区分函数调用与函数返回，生成调用栈。该模块可以识别尾递归。
 - 波形分析器插件：波形产生后，指令只能以十六进制机器码的形式展示。不便于阅读。作者为波形分析器设计了一个插件。
-  使用反汇编工具将机器码转换为易读的汇编指令。如@fig:after , @fig:before 所示。相关代码已发布@wave。
+  使用反汇编工具将机器码转换为易读的汇编指令。如@fig:after ， @fig:before 所示。相关代码已发布@wave。
 
   #fig(image("images/before.png",width: 80%), caption: [在波形软件中的原始显示]) <before>
   #fig(image("images/after.png",width: 80%), caption: [使用插件后可显示对应汇编]) <after>
@@ -902,7 +901,6 @@ CPU提供硬件功能，AM提供运行时环境。
 
 #fig(image("images/AM.png",width:90%),caption:[AM整体层次]) <AM>
 
-#pagebreak() //手动孤页控制
 === 适配抽象计算机
 
 通过在硬件中实现某种机制，然后在AM中使用该机制填充相应的API。
@@ -1064,7 +1062,7 @@ _loader:
 
 本文设计的CPU可以正确运行CoreMark，并在合理的时间内完成测试。
 
-#fig(image("images/coremark.png", width: 100%), caption: [CoreMark测试结果]) <coremark_img>
+#fig(image("images/coremark.png", width: 100%), caption: [仿真环境CoreMark测试结果]) <coremark_img>
 
 
 //=== 特权指令集测试 
@@ -1087,8 +1085,8 @@ _loader:
 == 片上系统
 
 为了实现包括输入输出在内的完整功能，需要将单一处理器核封装到SoC（System on Chip，片上系统）中。
-SoC不仅仅只包含一个处理器, 还有诸多的外围设备, 以及连接处理器和外围设备之间的总线。
-本文使用ysyxSoC框架@ysyxsoc. 其主要结构如 @fig:soc_arc 所示
+SoC不仅仅只包含一个处理器， 还有诸多的片上外围设备， 以及连接处理器和外围设备之间的总线。
+本文使用ysyxSoC框架@ysyxsoc 作为SoC部分的实现。 其主要结构如 @fig:soc_arc 所示
 
 #fig(image("images/SoC_Arc.png", width: 76%), caption: [ysyxSoC架构]) <soc_arc> 
 
@@ -1101,17 +1099,18 @@ AXI总线通过AXI 转 APB 桥接器在转换成APB协议后连接到APB交叉�
 
 #pagebreak() //手动孤页控制
 
+
 === 外设地址空间
 
 目前主要有两种方式来实现CPU核与外设的通信。
-第一种I/O编址方式是端口映射I/O(PIO), CPU使用专门的I/O指令对设备进行访问, 并把设备的地址称作端口号。
+第一种I/O编址方式是端口映射I/O(PIO)， CPU使用专门的I/O指令对设备进行访问， 并把设备的地址称作端口号。
 第二种方式是内存映射IO（MMIO）。外设将自己的设备寄存器做为内存地址提供。
 当需要访问外设寄存器时，CPU核读取或写入该地址，通过总线桥将指令转发到对应的外设中。
 
  
-由于PIO把端口号作为I/O指令的一部分。指令集为了兼容已经开发的程序, 端口号是只能添加但不能修改的。 
-这意味着, 端口映射I/O所能访问的I/O地址空间的大小, 在设计I/O指令的那一刻就已经决定下来了。 
-随着设备越来越多, 功能也越来越复杂, I/O地址空间有限的端口映射I/O已经逐渐不能满足需求了。 
+由于PIO把端口号作为I/O指令的一部分。指令集为了兼容已经开发的程序， 端口号只能添加而不能修改。 
+这意味着， 端口映射I/O所能访问的I/O地址空间的大小， 在设计I/O指令的那一刻就已经决定下来了。 
+随着设备越来越多， 功能也越来越复杂， I/O地址空间有限的端口映射I/O已经逐渐不能满足需求了。 
 因此，目前的主流设计均采用内存映射IO的方式来实现设备交互。
 
 ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
@@ -1126,6 +1125,7 @@ ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
     [SPI],   [0x1000_1000～0x1000_1fff], 
     [SRAM],  [0x0f00_0000～0x0f00_1fff],
     [VGA],   [0x2100_0000～0x211f_ffff],
+    [FLASH], [0x3000_0000～0x3015_ffff],
     ),
   caption: [MMIO映射],
 ) <mmio_map>
@@ -1133,17 +1133,58 @@ ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
 
 == 现场可编程门阵列
 
-现场可编程门阵列（FPGA），是一种半定制的集成电路，其具有高度可编程性，并且接近专用集成电路（ASIC）的特点。
+现场可编程门阵列（FPGA），是一种半定制的集成电路，其具有高度可编程性，并且接近专用集成电路（ASIC）的特点，
 其经常用于在流片前的验证阶段中。
 与微控制器（MCU）不同，FPGA不含固定的逻辑。需要开发者使用硬件描述语言设计电路后才会呈现具体电路的行为。
+因此，通过将ysyxSoC与CPU核烧录至FPGA，可以在真实的硬件上测试设计的正确性。
 
-本文选择了基于Altera EP4CE10的野火征途开发板。其具有1万组逻辑元素，179个可编程IO口。
+本文选择了基于Altera EP4CE10的野火征途开发板。其核心EP4CE10F17C8具有1万组逻辑元素，179个可编程IO口。
 
-#fig(image("images/product.png", width: 70%), caption: [开发板实物图])
+#fig(image("images/product.png", width: 65%), caption: [开发板实物图])
+
+#indent 限于时间及技术水平。本文主要使用 @fig:fpga_Arc 所示的外设。
+
+#fig(image("images/fpga_Arc.png",height: 20% ), caption: [开发板外设架构图]) <fpga_Arc>
+
+== FPGA环境迁移
+
+为了从基于Verilator的软件仿真到基于FPGA的硬件仿真。
+首先必须在FPGA提供的集成开发环境Quartus中导入工程，并去除不可综合代码。
+
+导入后如 @fig:quartus_import 所示。
+
+#fig(image("images/questa_import.png", height: 28%), caption: [导入后的SoC]) <quartus_import>
+
+#indent 得益于Chisel与CIRCT的抽象与迁移能力，通过在Chisel代码中将SRAM声明为同步读写存储体。
+可生成符合规范的RTL代码，允许综合工具的识别推断功能自动将其替换为标准同步存储器 IP。
+即优化了时序，也节省了逻辑资源。
+
+#fig(image("images/infer_ip.png", height: 20%), caption: [存储体自动推断])
+
+=== 时钟适配
+
+开发板使用一个固定为50MHz的不可调晶振为FPGA提供时钟信号。
+经过Quartus Timing Analyzer分析 （@fig:clock），SoC核最高能承受的频率约为15.5MHz。
+因此，需要使用锁相环(PLL)降低输入频率。
+
+为了稳定性，本设计选用了较为保守的5MHz作为SoC核的时钟频率 （@fig:pll2）。
+
+#fig(image("images/clock.png"), caption: [时钟分析报告]) <clock>
+
+#fig(image("images/PLL1.png"), caption: [配置PLL输入时钟]) <pll1>
+
+#fig(image("images/PLL2.png"), caption: [配置PLL输出时钟]) <pll2>
+
+
+#pagebreak() //手动孤页控制
 
 == GPIO控制器
 
 === 寄存器设计
+
+GPIO控制器的设计较为简单，仅有两个寄存器，分别对应开发板上的Led灯和按键。
+Led寄存器直接驱动对应的IO管脚，写入后立即生效。
+而按键寄存器会在读取的第一周期将IO口电平读入至keys_reg寄存器，并在第二周期将其送回总线。
 
 #fig(
   tlt(
@@ -1190,8 +1231,10 @@ class gpioChisel extends Module {
 
 === 测试程序
 
-通过MMIO，CPU核上运行的程序可以直接控制LED灯。
+通过MMIO，CPU核上运行的程序可以直接控制Led灯。
 通过编写移位程序，可编写基础的流水灯测试程序。
+其中 a4 寄存器存储着GPIO的MMIO地址，而a0寄存器负责记录当前点亮的Led灯。
+wait子程序提供简单的软件延迟，确保流水效果可被肉眼观测到。
 
 #figure(text(par(```asm
 _start:
@@ -1214,11 +1257,13 @@ wait:
 	ret
 ```,justify: false,leading:0.65em),size: 12pt),caption: [流水灯测试代码]) <gpio>
 
-#fig(image("images/liushui.png", width: 70%), caption: [流水灯测试])
+#fig(image("images/liushui.png", width: 75%), caption: [流水灯测试])
 
 #pagebreak() //手动孤页控制
 
 == UART 控制器
+
+UART控制器采用兼容16550串口控制芯片的设计。
 
 === 寄存器设计
 
@@ -1235,7 +1280,7 @@ wait:
 ) 
 === 测试程序
 
-结合AM提供的支持，程序可直接使用C语言标准库输出到串口。
+结合AM提供的支持，程序可直接使用C语言标准库输出到串口。串口初始化程序见 @lst:start2。
 
 #figure(text(par(```c
 int printf(const char *fmt, ...) {
@@ -1255,7 +1300,32 @@ int main(){
 
 ```,justify: false,leading:0.65em),size: 12pt),caption: [UART测试代码节选]) 
 
-#fig(image("images/uart_test.png", width: 50%), caption: [串口助手接收UART数据]) 
+#fig(image("images/uart_test.png", width: 50%), caption: [串口助手接收UART数据])
+== SPI控制器
+
+SPI，即Serial Peripheral Interface（串行外设接口），是一款经典的同步、低成本、双工总线接口。
+因其使用广泛，容易学习，能以较低的成本完成中低速外设连接而受到开发者的欢迎。
+
+本开发板使用SPI总线连接Flash芯片。
+为方便上层软件使用，本文作者为SPIN控制器添加了就地执行（XIP）功能，使得SPI控制器可以自行生成Flash芯片的控制信号。
+完成读取后返回给片内总线。
+
+总线交叉桥被配置成为纯SPI命令与Flash地址空间均分配给SPI控制器处理。
+因此，当SPI控制器收到读写请求时，首先会对地址进行判断。
+如果是纯SPI命令。则直接送入SPI相关电路，如果是Flash访问，则启动状态机，代替软件操作SPI相关电路完成访问操作。
+
+=== 测试程序
+
+由于片上ROM容量较小，在不接入Flash存储器的情况下，只能执行体积不超过4KB的微型测试程序。
+因此，在接入Flash后，可运行的程序规模大大增长。能运行Coremark等实际测试程序。
+
+在FPGA上运行Coremark的结果如@fig:coremark_fpga 所示。
+
+
+#fig(image("images/coremark_fpga.png", width: 50%), caption: [FPGA上运行Coremark]) <coremark_fpga>
+
+#indent 可以看到，上板后的SoC能正确运行完整的Coremark。
+
 
 = 总结与展望
 
@@ -1263,28 +1333,29 @@ int main(){
 
 本研究成功完成了基于Chisel的精简指令集微处理器设计，该处理器具备RISC-V指令集的模块化、可扩展特性，适应物联网应用的多样化需求和安全性要求。并通运行测试程序和跑分程序，证实了所设计处理器的正确性和有效性。
 
-在此基础上，又成功实现了SoC化和对FPGA的支持，开发了GPIO和UART控制器，
+在此基础上，又成功实现了SoC化和对FPGA的支持，开发了UART和SPI控制器，
 详细规定了寄存器设计、主体代码以及测试程序，确保处理器与外设间的协同工作。并完成了板级验证。
-能实现基本输入输出、硬件线程切换、图灵等价，几倍良好的可拓展性。
+能实现基本输入输出、硬件线程切换、图灵等价，具备良好的可拓展性。
 
 借助Chisel的抽象化和敏捷开发的特性。快速地完成了处理器的整体设计与SoC接入。
 
 主要内容列举如下：
-+ 通过阅读大量国内外文献，对RISC-V指令集架构的设计与发展现状进行了分析。并对比了其和其他精简指令集架构的优缺点。阅读各类相关的英文文档以确定处理器核的实现与标准文档一致。
++ 通过阅读大量国内外文献，对RISC-V指令集架构的设计与发展现状和优缺点进行了分析。阅读各类相关的英文文档以确定处理器核的实现与标准文档一致。
 + 介绍了Chisel语言，敏捷开发对芯片设计领域的好处。着重介绍了Chisel语言如何通过提供丰富硬件原语抽象、支持类型描述电路接口以及使用函数操作电路组件，实现电路生成器的高效、可靠与类型安全性，从而显著提升逻辑设计效率与稳健性。
 + 搭建了软件测试平台，通过Verilator与Difftest。仔细验证了处理器功能与行为的正确性，
   通过运行多种测试程序，确保处理器设计可以在各类工作负载下正常运行。
 + 完成了仿真环境到FPGA上板验证的迁移。以及对外设模块的仿真测试。学习了仿真环境与FPGA的不同，
   并掌握了基础的FPGA开发技能，包括IP核调用，添加引脚约束，简单时序约束，片上逻辑分析仪的使用，通过调试器
   对FPGA进行编程及固化。
-
++ 期间遇到了指令实现不正确或对标准文档错误解读导致的程序行为异常。通过完善的测试环境与difftest支持，
+  快速地完成了错误的定位与排除。
 
 #pagebreak() //手动孤页控制
 
 == 展望
 
 虽然本文实现了基于Chisel的RV32E指令集的处理器设计。搭建了测试平台并完成上板验证，达到了期望的研究效果。
-但任存在诸多缺陷，还需要进一步的学习、设计与调试。
+但仍存在诸多缺陷，还需要进一步的学习、设计与调试。
 
 主要缺陷内容列举如下：
 
@@ -1293,8 +1364,6 @@ int main(){
   不利于提升处理器各模块的利用率与整体时钟频率。
 + 无缓存功能，造成CPU每次在存储数据时都必须等待外部存储器响应，降低了运行效率。
   且不支持MMU，导致无法运行现代操作系统（如Linux）。
-+ 截至本文初稿完成，SoC中的Flash存储芯片控制器一直没有通过调试。
-  导致上板时只能运行小于4KB的程序，极大地限制了能进行的演示。导致上板后只能执行部分测试。造成了上板后的测试数量远少于仿真分析环节的测试。
 + 译码器的设计仍有优化空间。
 
 
@@ -1306,12 +1375,19 @@ int main(){
   pagebreak() + " "
 }
 // 参考文献
-#bibliography(("bibs/ex01.bib", "bibs/ymlex.yml"),
-  style: "./china-national-standard-gb-t-7714-2015-numeric.csl"
-)
 
-// 正文结束标志，不可缺少
-#mainmatter-end()
+#bib(path:("bibs/ex01.bib", "bibs/ymlex.yml"))
+
+// 手动分页
+#if (twoside) {
+  pagebreak() + " "
+}
+
+#show: appendix
+
+#fig(image("images/Screenshot_mtrace.png", height: 32%), caption: [mtrace使用截图]) <mtrace>
+#fig(image("images/sdb_exec.png", height:  40%), caption: [单指令执行相关代码]) <sdb_exec>
+#fig(image("images/Screenshot_profile.png"), caption: [自动性能分析相关代码]) <make_prof>
 
 
 #if (twoside) {
@@ -1335,19 +1411,6 @@ int main(){
 ]
 
 
-// 手动分页
-#if (twoside) {
-  pagebreak() + " "
-}
-
-#show: appendix
-
-= 附录
-
-#fig(image("images/Screenshot_mtrace.png", height: 32%), caption: [mtrace使用截图]) <mtrace>
-#fig(image("images/sdb_exec.png", height:  40%), caption: [单指令执行相关代码]) <sdb_exec>
-#fig(image("images/Screenshot_profile.png"), caption: [自动性能分析相关代码]) <make_prof>
-
-
-
  
+// 正文结束标志，不可缺少
+#mainmatter-end()
