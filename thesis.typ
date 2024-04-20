@@ -405,7 +405,7 @@ Valid标识模块当前的数据（Data）是否有效，Ready标识本模块是
  
 模块间遵循 @tbl:ready_valid_tbl 的语义进行传输握手。
 此外，为防止数据丢失，当模块表示当前数据有效后，除非数据成功传输，否则不能撤销有效信号。
-本级有效而下级忙的情况称为发生数据反压（Back pressure）
+本级有效而下级忙，导致数据暂时无法向下传输的情况称为发生数据反压（Back pressure）。
 
 #fig(image("images/ready_valid.png", height: 15%), caption: [Ready / Valid 握手信号]) <ready_valid>
 
@@ -468,10 +468,10 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 
 指令访存器的任务是根据当前PC，向处理器核内的AXI @axiSpecification 主机仲裁单元发起访存请求。其结构如@fig:imem_fsm  所示。
 在复位后，指令访存控制器在`idle`状态等待有效的访存事务发生。收到访存请求后，按照@tbl:imem_fsm_tlb
-的行为对取值器的输出端口进行操作。需要注意的是，该状态机的输出均来自寄存器。
+的行为对取指器的输出端口进行操作。需要注意的是，该状态机的输出均来自寄存器。
 
-由于AXI协议规定在读事务完成时不再保持数据有效信号。在读取完成后，指令执行中的若干周期，指令有效信号
-将由状态机提供
+由于AXI协议规定在读事务完成时不再保持数据有效信号。在读取完成后，指令执行中的若干周期，
+指令有效信号将由此状态机提供。
 
 #fig(image("images/inst-mem_stateMachine.png", height: 28%), caption: [取指状态机]) <imem_fsm>
 
@@ -513,7 +513,7 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 
 == 执行单元
 
-执行阶段是微架构数据流的核心，如 @fig:cpu_execute 所示。其任务是根据译码单元产生的控制信号，对操作数进行逻辑运算。
+执行阶段是微架构数据流的核心，如 @fig:cpu_execute 所示。其任务是根据译码单元产生的控制信号，对操作数进行运算。
 
 
 #fig(image("images/cpu_execute.png", height: 30%) , caption: [执行单元总体架构]) <cpu_execute>
@@ -772,7 +772,7 @@ hit函数会根据输入和自身保存的地址范围返回是否命中。各�
 其产生逻辑如下：1. 当前输入地址落在某个从机的地址范围内；
 2.该从机准备完成 ； 3.当前输入地址有效 ； 
 io.out.map(\_.ar.arready) 会从所有输出中选出arready端口，
-并将其和_decodedOH_ 按位与。最终结果进行规约或操作，就可以生成符合语义的io.in.ar.arready
+并将其和_decodedOH_ 按位与。最终结果进行规约或操作，即可生成符合语义的io.in.ar.arready 。
 
 例如，主机发出了向属于UART外设地址的AXI读取请求，
 当前SRAM，UART外设空闲，RTC外设正忙。
@@ -806,7 +806,7 @@ _decodedOH_ 与 io.in.ar.arready 的生成过程如 @fig:axidecode_OH 所示。
 
 == 硬件验证环境
 
-接下来对验证流程中的主要模块进行讲解 
+接下来对验证流程中的主要模块进行讲解。 
 
 #pagebreak() //手动孤页控制
 
@@ -846,7 +846,7 @@ Verilator 是一款基于周期的开源 Verilog 仿真工具，可以将 Verilo
 
   仿真环境支持自动运行或用户手动控制。@fig:fzjm 演示了仿真环境运行时的界面，
   在本演示中，用户通过 _si 5_ 要求仿真环境执行5条指令后显示当前的寄存器信息 _info r_。
-  仿真器可以成功显示执行指令的反汇编，并以可读的方式输出当期的寄存器信息。
+  仿真环境可以成功显示执行指令的反汇编，并以可读的方式输出当期的寄存器信息。
 
 
   #fig(image("images/npc-sdb.png",height: 30%), caption: [仿真界面演示]) <fzjm>
@@ -924,7 +924,7 @@ _start:
 
 ```,justify: false,leading:0.65em),size: 12pt),caption:[start.S]) <start>
 
-#indent 在进入C环境后，AM的需要完成以下操作
+#indent 在进入C环境后，AM需要完成以下操作：
 
 + 实现基本字符输出函数 putch
 + 初始化串口输出
@@ -1025,7 +1025,7 @@ _loader:
 
 === 运行测试
 
-基础测试包括基本的算数运算、跳转、加载储存等指令。使用C语言编写，测试列表见 @tbl:basic_test
+基础测试包括基本的算数运算、跳转、加载储存等指令。使用C语言编写，全部测试列表见 @tbl:basic_test 。
 
 #fig(tlt(
   columns: 4,
@@ -1053,7 +1053,7 @@ _loader:
   [wanshu],[完数],
 ), caption:[基本测试程序]) <basic_test>
 
-#indent 由@fig:basic_test_result 可见，CPU顺利通过基本测试
+#indent 由@fig:basic_test_result 可见，CPU顺利通过基本测试。
 
 #fig(image("images/basic_test.png",height : 47% ), caption: [基本测试结果]) <basic_test_result>
 
@@ -1103,14 +1103,14 @@ AXI总线通过AXI 转 APB 桥接器在转换成APB协议后连接到APB交叉�
 === 外设地址空间
 
 目前主要有两种方式来实现CPU核与外设的通信。
-第一种I/O编址方式是端口映射I/O(PIO)， CPU使用专门的I/O指令对设备进行访问， 并把设备的地址称作端口号。
+第一种方式是端口映射I/O(PIO)， CPU使用专门的I/O指令对设备进行访问， 并把设备的地址称作端口号。
 第二种方式是内存映射IO（MMIO）。外设将自己的设备寄存器做为内存地址提供。
 当需要访问外设寄存器时，CPU核读取或写入该地址，通过总线桥将指令转发到对应的外设中。
 
  
 由于PIO把端口号作为I/O指令的一部分。指令集为了兼容已经开发的程序， 端口号只能添加而不能修改。 
 这意味着， 端口映射I/O所能访问的I/O地址空间的大小， 在设计I/O指令的那一刻就已经决定下来了。 
-随着设备越来越多， 功能也越来越复杂， I/O地址空间有限的端口映射I/O已经逐渐不能满足需求了。 
+随着设备越来越多， 功能越来越复杂， I/O地址空间有限的端口映射I/O已经逐渐不能满足需求了。 
 因此，目前的主流设计均采用内存映射IO的方式来实现设备交互。
 
 ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
@@ -1148,7 +1148,7 @@ ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
 
 == FPGA环境迁移
 
-为了从基于Verilator的软件仿真到基于FPGA的硬件仿真。
+为了从基于Verilator的软件仿真环境迁移到基于FPGA的硬件仿真环境。
 首先必须在FPGA提供的集成开发环境Quartus中导入工程，并去除不可综合代码。
 
 导入后如 @fig:quartus_import 所示。
@@ -1228,6 +1228,8 @@ class gpioChisel extends Module {
 }
 
 ```,justify: false,leading:0.65em),size: 12pt),caption: [GPIO控制器代码])
+
+#pagebreak() // 手动孤页控制
 
 === 测试程序
 
