@@ -1,7 +1,8 @@
 #import "nju-thesis/template.typ": documentclass, tablex, fig, tlt, indent
 #import "nju-thesis/utils/style.typ": 字号, 字体
 #import "@preview/tablex:0.0.6": *
-
+#import "@preview/cuti:0.2.1": show-cn-fakebold
+//#show: show-cn-fakebold
 // 双面模式，会加入空白页，便于打印
 #let twoside = false
 
@@ -182,12 +183,12 @@ Tenstorrent公司通过组合大量精简的RISC-V核，使用片上网络技术
 使得RISC获得了优秀的能效比。
 
 
-== RISC-V 指令集
+=== RISC-V 指令集
 
 2010年，David Patterson等人出于教学目的，在仔细评估了市面上各类指令集后，发现它们都存在设计上的不足 @waterman2016design 。
 决定重头开始，吸取指令集架构领域25年期间的经验教训。设计了一款新的开源指令集架构—— RISC-V。
 
-RISC-V 指令编码格式如下
+RISC-V 指令编码格式如下图：
 
 #fig(image("images/riscv_code_format.png", height: 14%) , caption: [RISC-V指令格式]) <inst_format>
 
@@ -296,7 +297,7 @@ Verilog与VHDL最初都是为硬件仿真而创建的，后来才被用于综合
 
 Chisel #cite(<Chisel2012>) 是一种基于高级编程语言Scala @odersky2004overview 的新型硬件构造语言（HCL） 。由伯克利大学的研究团队于2012年推出。
 
-Chisel在Scala中提供了各类硬件原语的抽象，使得工程师者可以用Scala类型描述电路接口，以Scala函数操作电路组件。
+Chisel在Scala中提供了各类硬件原语的抽象，使得工程师可以用Scala类型描述电路接口，以Scala函数操作电路组件。
 这种元编程可实现表现力强、可靠、类型安全的电路生成器，从而提高逻辑设计的效率和稳健性。而基于生成器的设计促进了模块在项目之间的重用。
 
 需要说明的是，虽然Chisel具有许多传统硬件描述语言不具备的高级特性，但其还是一门硬件构造语言，而不是高层次综合。
@@ -307,7 +308,7 @@ FIRRTL随后被输入硬件编译框架(Hardware Compiler Framework，HCF) CIRCT
 使用HCF的好处之一是其内置了大量的优化器，可进行常量传播、共用表达式合并、不可达代码消除或向专用集成电路（ASIC）与现场可编程门阵列（FPGA）提供针对性的优化#cite(<8203780>) 。
 这些特点使工程师能够更专注于逻辑功能的设计，从而显著提升设计效率与代码质量。
 
-=== Chisel的优点
+Chisel语言具有以下优点：
 
 + 开发高效
 
@@ -377,11 +378,11 @@ FIRRTL随后被输入硬件编译框架(Hardware Compiler Framework，HCF) CIRCT
 
 = 处理器微架构设计与实现
 
-本文将首先实现一个单发射，简单流水线，顺序执行的基本RV32E扩展处理器芯片微架构。
+本文将首先实现一个单发射，无流水线，顺序执行的基本RV32E扩展处理器芯片微架构。
 
-为方便拓展，本微架构流水级之间使用异步定时方式通信，通过握手信号控制数据是否流动。
-每个流水级的行为只取决于自身和下游模块的状态， 流水级均可以独立工作。
-通过这种设计，避免了对全局控制器的需求，进而简化添加指令和流水级的难度。
+为方便拓展，本微架构各级之间使用异步定时方式通信，通过握手信号控制数据是否流动。
+各级的行为只取决于自身和下游模块的状态， 各级均可以独立工作。
+通过这种设计，避免了对全局控制器的需求，进而简化添加指令和流水化的难度。
 也为探索乱序执行做好了准备。
 
 在逻辑上，为了方便优化，
@@ -495,7 +496,6 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 译码单元的任务是任务是根据当前指令，通过译码器产生各类控制信号；从寄存器组中读出数据。
 #fig(image("images/cpu_decode.png", height: 30%) , caption: [取指单元总体架构]) <cpu_decode>
 
-=== 译码器
 
 译码器主要功能如下：
 
@@ -521,7 +521,7 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 == 访存单元
 
 访存单元是为了装载（LOAD）与储存（STORE）指令设计的。整体结构如 @fig:cpu_memory 所示。
-为了提高流水线后各阶段的效率，设计时分析了LOAD/STORE指令的资源需求，
+为了提高流水线化后各阶段的效率，设计时分析了LOAD/STORE指令的资源需求，
 决定将CSR的读写合并于本模块内。
 
 根据当前执行的指令不同，模块顶层的 Ready/Valid 生成器会选择旁路或使用来自数据访存器的 Ready/Valid 信号。
@@ -530,7 +530,7 @@ RISCV架构支持比较两个通用寄存器的值并根据比较结果进行分
 
 #fig(image("images/cpu_memory.png", height: 38%) , caption: [访存单元总体架构]) <cpu_memory>
 
-=== 数据访存器
+数据访存器架构如下。
 
 
 #fig(image("images/cpu_memory_exmem.png", height: 38%) , caption: [数据访存器架构]) <cpu_memory_exmem>
@@ -1021,9 +1021,7 @@ _loader:
   ret
 ```,justify: false,leading:0.65em),size: 12pt), caption: [bootloader节选]) <bootloader>
 
-== 仿真分析
-
-=== 运行测试
+== 运行仿真测试
 
 基础测试包括基本的算数运算、跳转、加载储存等指令。使用C语言编写，全部测试列表见 @tbl:basic_test 。
 
@@ -1097,12 +1095,8 @@ CPU核通过AXI总线与片上外设接口进行数据交互，AXI交叉桥将�
 AXI总线通过AXI 转 APB 桥接器在转换成APB协议后连接到APB交叉桥。由APB总线负责低速外设，
 这些外设通过片上控制器经IO连接到片外外设中。
 
-#pagebreak() //手动孤页控制
 
-
-=== 外设地址空间
-
-目前主要有两种方式来实现CPU核与外设的通信。
+在外设地址空间方面，目前主要有两种方式来实现CPU核与外设的通信。
 第一种方式是端口映射I/O(PIO)， CPU使用专门的I/O指令对设备进行访问， 并把设备的地址称作端口号。
 第二种方式是内存映射IO（MMIO）。外设将自己的设备寄存器做为内存地址提供。
 当需要访问外设寄存器时，CPU核读取或写入该地址，通过总线桥将指令转发到对应的外设中。
@@ -1161,9 +1155,7 @@ ysyxSoC的MMIO映射如@tbl:mmio_map 所示。
 
 #fig(image("images/infer_ip.png", height: 20%), caption: [存储体自动推断])
 
-=== 时钟适配
-
-开发板使用一个固定为50MHz的不可调晶振为FPGA提供时钟信号。
+在时钟适配方面，开发板使用一个固定为50MHz的不可调晶振为FPGA提供时钟信号。
 经过Quartus Timing Analyzer分析 （@fig:clock），SoC核最高能承受的频率约为15.5MHz。
 因此，需要使用锁相环(PLL)降低输入频率。
 
@@ -1261,7 +1253,6 @@ wait:
 
 #fig(image("images/liushui.png", width: 75%), caption: [流水灯测试])
 
-#pagebreak() //手动孤页控制
 
 == UART 控制器
 
@@ -1309,14 +1300,12 @@ SPI，即Serial Peripheral Interface（串行外设接口），是一款经典�
 因其使用广泛，容易学习，能以较低的成本完成中低速外设连接而受到开发者的欢迎。
 
 本开发板使用SPI总线连接Flash芯片。
-为方便上层软件使用，本文作者为SPIN控制器添加了就地执行（XIP）功能，使得SPI控制器可以自行生成Flash芯片的控制信号。
+为方便上层软件使用，本文作者为SPI控制器添加了就地执行（XIP）功能，使得SPI控制器可以自行生成Flash芯片的控制信号。
 完成读取后返回给片内总线。
 
 总线交叉桥被配置成为纯SPI命令与Flash地址空间均分配给SPI控制器处理。
 因此，当SPI控制器收到读写请求时，首先会对地址进行判断。
 如果是纯SPI命令。则直接送入SPI相关电路，如果是Flash访问，则启动状态机，代替软件操作SPI相关电路完成访问操作。
-
-=== 测试程序
 
 由于片上ROM容量较小，在不接入Flash存储器的情况下，只能执行体积不超过4KB的微型测试程序。
 因此，在接入Flash后，可运行的程序规模大大增长。能运行Coremark等实际测试程序。
